@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+
+<!--
+  This is a basic HTML file template to become the new homepage of the site.
+  Currently it simply includes Vanilla styles and not much else.
+
+  When you come to work on it in ernest, please remove this comment
+  and replace index.html with this file.
+-->
+
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="/css/styles.css" />
+  <link rel="shortcut icon" type="image/png" href="">
+  <title>
+    {% if page.title %}
+    {{ page.title }} | dqlite.io
+    {% else %}
+    dqlite.io
+    {% endif %}
+  </title>
+</head>
+<body>
+  {{content}}
+</body>
+</html>
+
