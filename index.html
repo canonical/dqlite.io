@@ -2,4 +2,134 @@
 layout: base
 ---
 
-<h1>dqlite.io</h1>
+  <section class="p-strip--image is-dark is-deep" style="background-image: url('https://assets.ubuntu.com/v1/8bc629a7-microk8s-suru-background.svg'); background-size: cover;">
+    <div class="row u-equal-height">
+      <div class="col-8">
+        <h1>Distributed SQLite for clusters</h1>
+        <p class="p-heading--four">Fast, embedded, in-memory or persistent SQL database with RAFT consensus for high-availability IoT and Edge devices.</p>
+      </div>
+      <div class="col-4">
+        <!-- Logo goes here -->
+      </div>
+    </div>
+  </section>
+  
+  <section class="p-strip is-bordered">
+    <div class="row">
+      <div class="col-7">
+        <p>Dqlite extends SQLite across a cluster of hosts, with automatic failover and high availability to keep your application running.</p>
+        <p>It uses C-RAFT, an optimised RAFT implementation in C to gain high-performance transactional consensus and fault tolerance while preserving SQlite’s famous efficiency and footprint.</p>
+        <ul class="p-inline-list">
+          <li class="p-inline-list__item"><a href=""><button class="p-button--positive">Get Started</button></a></li>
+          <li class="p-inline-list__item"><a href=""><button class="p-button--neutral">Download</button></a></li>
+          <li class="p-inline-list__item">or <code>apt-get dqlite</code> on Ubuntu</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+<section class="p-strip--light is-bordered">
+  <div class="row">
+    <div class="col-7">
+      <ul class="p-list">
+        <li class="p-list__item is-ticked">Fully asynchronous network and disk I/O</li>
+        <li class="p-list__item is-ticked">Comprehensive test suite for correctness</li>
+        <li class="p-list__item is-ticked">Benchmarked for memory footprint and network efficiency</li>
+        <li class="p-list__item is-ticked">Persistent storage to disk for transaction logs</li>
+        <li class="p-list__item is-ticked">Fast recovery for system restore</li>
+        <li class="p-list__item is-ticked">C, C++ and Golang bindings</li>
+        <li class="p-list__item is-ticked">ARM, X86, POWER, Z</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="p-strip is-bordered">
+  <div class="row">
+    <div class="col-12">
+      <h2 class="p-muted-heading u-align-text--center">AS USED BY</h2>
+      <ul class="p-inline-images">
+        <!-- Logos go here 
+          <li class="p-inline-images__item">
+            <img class="p-inline-images__logo" src="" alt="">
+          </li>
+        -->
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="p-strip--light is-bordered">
+  <div class="row">
+    <ul class="p-matrix">
+      <li class="p-matrix__item">
+        <div class="p-matrix__content">
+          <h3 class="p-matrix__title">Ultra-low latency</h3>
+          <div class="p-matrix__desc">
+            <p>C-RAFT is tuned to minimize transaction latency. Expect 1G XXX updates per second on networks with SSDs.</p>
+          </div>
+        </div>
+      </li>
+      <li class="p-matrix__item">
+        <div class="p-matrix__content">
+          <h3 class="p-matrix__title">Portable</h3>
+          <div class="p-matrix__desc">
+            <p>C-RAFT and sqlite are both written in C for maximum cross-platform portability.</p>
+          </div>
+        </div>
+      </li>
+      <li class="p-matrix__item">
+        <div class="p-matrix__content">
+          <h3 class="p-matrix__title">Open Source</h3>
+          <div class="p-matrix__desc">
+            <p>Dual Apache/GPL licensed for maximum compatibility.</p>
+          </div>
+        </div>
+      </li>
+      <li class="p-matrix__item">
+        <div class="p-matrix__content">
+          <h3 class="p-matrix__title">Usability</h3>
+          <div class="p-matrix__desc">
+            <p>Includes common CLI pattern for database initialization and voting member joins and departures.</p>
+          </div>
+        </div>
+      </li>
+      <li class="p-matrix__item">
+        <div class="p-matrix__content">
+          <h3 class="p-matrix__title">Fast failover</h3>
+          <div class="p-matrix__desc">
+            <p>No more than 100ms delay on failover, and automatic selection of the new leader.</p>
+          </div>
+        </div>
+      </li>
+      <li class="p-matrix__item">
+          <div class="p-matrix__content">
+            <h3 class="p-matrix__title">Persistence</h3>
+            <div class="p-matrix__desc">
+              <p>Optional disk backing of the database for persistence, with SQLite’s transaction safety.</p>
+            </div>
+          </div>
+        </li>
+    </ul>
+  </div>
+</section>
+
+<section class="p-strip is-bordered">
+  <div class="row">
+    <div class="col-7">
+      <h2>Enterprise-grade SQL database availability for the Edge and IoT</h2>
+      <p>Modern edge computing is moving high-value applications to the edge of the network, where you often have far fewer guarantees about hardware availability and management. Appliances in the cabinet or in remote locations cannot be monitored and managed, or replaced very quickly, and often cannot have the same environmental controls. That makes the hardware less reliable, and increases the cost of human interventions.</p>
+      <p>Dqlite provides edge applications with an ultra-fast SQL database that is automatically replicated across multiple hosts, and guaranteed to provide an on-line backup for fast failover. SQLite is the world’s most widely used embedded SQL implementation. Dqlite adds robust consensus and failover semantics.</p>
+    </div>
+  </div>
+</section>
+
+<section class="p-strip--light is-bordered">
+    <div class="row">
+      <div class="col-7">
+        <h2>Why RAFT?</h2>
+        <p>Consensus algorithms provide certainty of transaction replication so that it is always possible to guarantee data persistence in the event of the loss of a machine in the cluster. RAFT is widely considered the consensus algorithm of choice for efficiency and correctness of implementation. C-RAFT is a hand-tuned C implementation of RAFT that is fully asynchronous by design.
+            </p>
+      </div>
+    </div>
+  </section>
