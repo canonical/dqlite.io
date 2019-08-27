@@ -1,13 +1,5 @@
 
 <!DOCTYPE html>
-
-<!--
-  This is a basic HTML file template to become the new homepage of the site.
-  Currently it simply includes Vanilla styles and not much else.
-  When you come to work on it in ernest, please remove this comment
-  and replace index.html with this file.
--->
-
 <html lang="en">
 
 <head>
@@ -15,19 +7,19 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="/css/styles.css" />
-  <link rel="shortcut icon" type="image/png" href="https://assets.ubuntu.com/v1/c39e0fed-apple-touch-icon.png">
+  <link rel="shortcut icon" type="image/png" href="https://assets.ubuntu.com/v1/f0c0fc0a-dqlite-favicon.png">
   <title>
     {% if page.title %}
     {{ page.title }} | Dqlite
     {% else %}
-    Dqlite - distributed SQLite for clusters
+    Dqlite - High-Availability SQLite
     {% endif %}
   </title>
 
   <!-- Google Analytics and Google Optimize -->
   <script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
   ga('create', 'UA-1018242-59', 'auto', {'allowLinker': true});
   ga('require', 'GTM-WVQJJBD');
@@ -36,19 +28,19 @@
   'ubuntu.com', 'insights.ubuntu.com', 'developer.ubuntu.com', 'cn.ubuntu.com',
   'design.ubuntu.com', 'maas.io', 'canonical.com', 'landscape.canonical.com',
   'pages.ubuntu.com', 'tutorials.ubuntu.com', 'docs.ubuntu.com']);
-  </script>
-  <!-- End Google Analytics and Google Optimize -->
+</script>
+<!-- End Google Analytics and Google Optimize -->
 
-  <!-- Google Tag Manager -->
-  <script>(function (w, d, s, l, i) {
-      w[l] = w[l] || []; w[l].push({
-        'gtm.start':
-          new Date().getTime(), event: 'gtm.js'
-      }); var f = d.getElementsByTagName(s)[0],
-        j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
-          'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
-    })(window, document, 'script', 'dataLayer', 'GTM-T5SMPTS');</script>
-  <!-- End Google Tag Manager -->
+<!-- Google Tag Manager -->
+<script>(function (w, d, s, l, i) {
+  w[l] = w[l] || []; w[l].push({
+    'gtm.start':
+    new Date().getTime(), event: 'gtm.js'
+  }); var f = d.getElementsByTagName(s)[0],
+  j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+  'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+})(window, document, 'script', 'dataLayer', 'GTM-T5SMPTS');</script>
+<!-- End Google Tag Manager -->
 </head>
 
 <body>
@@ -72,33 +64,47 @@
           <a href="#main-content">Jump to main content</a>
         </span>
         <ul class="p-navigation__links" role="menu">
-          <li class="p-navigation__link {% if page.layout == 'docs' %}is-selected{% endif %}" role="menuitem">
-            <a href="">Docs</a>
+          <li class="p-navigation__link" role="menuitem">
+            <a class="p-link--external" href="https://github.com/canonical/dqlite">Code</a>
           </li>
           <li class="p-navigation__link" role="menuitem">
-            <a class="p-link--external" href="https://discourse.ubuntu.com/search?q=dqlite">Discourse</a>
-          </li>
-          <li class="p-navigation__link" role="menuitem">
-            <a class="p-link--external" href="https://github.com/canonical-web-and-design/dqlite.io">Code</a>
-          </li>
-          <li class="p-navigation__link" role="menuitem">
-            <a class="p-link--external" href="https://github.com/canonical-web-and-design/dqlite.io/issues/new">Bugs</a>
+            <a class="p-link--external" href="https://github.com/canonical/dqlite/issues">Bugs</a>
           </li>
         </ul>
       </nav>
-      <div class="p-navigation__logo u-hide--small">
-        <a class="p-navigation__link" href="https://github.com/canonical-web-and-design/dqlite.io">
-          <img class="p-navigation__image" src="https://assets.ubuntu.com/v1/cb4b9125-github-white.svg" alt="" height="32px"/>
-        </a>
-        <a class="p-navigation__link" href="">
-          <img class="p-navigation__image" src="https://assets.ubuntu.com/v1/00f06e1d-twitter-social.svg" alt="" height="32px"/>
-        </a>
-      </div>
     </div>
   </header>
+
   {{content}}
-  <script src="/js/build/global-nav/global-nav.js"></script>
-	<script>canonicalGlobalNav.createNav({maxWidth:"72rem"});</script>
+
+  <footer class="p-strip">
+    <div class="row">
+      <div class="col-12">
+        <p>&copy; {{ 'now' | date: "%Y" }} Canonical Ltd.</p>
+        <nav>
+          <ul class="p-inline-list--middot">
+            <li class="p-inline-list__item">
+              <a aria-label="External link to the Ubuntu legal information page"
+                href="http://www.ubuntu.com/legal">
+                Legal information
+              </a>
+            </li>
+            <li class="p-inline-list__item">
+              <a aria-label="External link to report a bug on this site"
+              href="https://github.com/canonical-web-and-design/dqlite.io/issues/new">
+              Report a bug on this site
+            </a>
+          </li>
+        </ul>
+        <span class="u-off-screen">
+          <a href="#">Go to the top of the page</a>
+        </span>
+      </nav>
+    </div>
+  </div>
+</footer>
+<script src="/js/build/global-nav/global-nav.js"></script>
+<script>canonicalGlobalNav.createNav({maxWidth:"72rem"});</script>
 </body>
 
 </html>
