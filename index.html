@@ -2,42 +2,42 @@
 layout: base
 ---
 
-  <section class="p-strip--image is-dark is-deep" style="background-image: url('https://assets.ubuntu.com/v1/8bc629a7-microk8s-suru-background.svg'); background-size: cover;">
-    <div class="row u-equal-height">
-      <div class="col-8">
-        <h1>Distributed SQLite for clusters</h1>
-        <p class="p-heading--four">Fast, embedded, in-memory or persistent SQL database with RAFT consensus for high-availability IoT and Edge devices.</p>
-      </div>
-      <div class="col-4">
-        <!-- Logo goes here -->
-      </div>
+<section class="p-strip--image is-dark is-deep" style="background-image: url('https://assets.ubuntu.com/v1/8bc629a7-microk8s-suru-background.svg'); background-size: cover;">
+  <div class="row u-equal-height">
+    <div class="col-8">
+      <h1>High-Availability SQLite</h1>
+      <p class="p-heading--four">Fast, embedded, persistent SQL database with RAFT consensus for high-availability IoT and Edge devices.</p>
     </div>
-  </section>
-  
-  <section class="p-strip is-bordered">
-    <div class="row">
-      <div class="col-7">
-        <p>Dqlite extends SQLite across a cluster of hosts, with automatic failover and high availability to keep your application running.</p>
-        <p>It uses C-RAFT, an optimised RAFT implementation in C to gain high-performance transactional consensus and fault tolerance while preserving SQlite’s famous efficiency and footprint.</p>
-        <ul class="p-inline-list">
-          <li class="p-inline-list__item"><a href=""><button class="p-button--positive">Get Started</button></a></li>
-          <li class="p-inline-list__item"><a href=""><button class="p-button--neutral">Download</button></a></li>
-          <li class="p-inline-list__item">or <code>apt-get dqlite</code> on Ubuntu</li>
-        </ul>
-      </div>
+    <div class="col-4">
+      <!-- Logo goes here -->
     </div>
-  </section>
+  </div>
+</section>
+
+<section class="p-strip is-bordered">
+  <div class="row">
+    <div class="col-8">
+      <p>Dqlite (“distributed SQLite”) extends SQLite across a cluster of machines, with automatic failover and high availability to keep your application running.</p>
+      <p>It uses <a href="http://github.com/canonical/raft">C-RAFT</a>, an optimised RAFT implementation in C to gain high-performance transactional consensus and fault tolerance while preserving SQlite’s famous efficiency and footprint.</p>
+      <ul class="p-inline-list">
+        <li class="p-inline-list__item"><a href="https://github.com/canonical/dqlite/releases" class="p-button--positive u-no-margin--bottom-small">Download</a></li>
+        <li class="p-inline-list__item"><a href="https://github.com/canonical/dqlite/blob/master/doc/faq.md" class="p-button--neutral u-no-margin--bottom-small">FAQ</a></li>
+      </ul>
+      <p>or on Ubutnu: <pre class="p-code-numbered"><code><span class="p-code-numbered__line">sudo add-apt-repository -y ppa:dqlite/v1 && sudo apt install dqlite</span></code></pre></p>
+    </div>
+  </div>
+</section>
 
 <section class="p-strip--light is-bordered">
   <div class="row">
-    <div class="col-7">
-      <ul class="p-list">
+    <div class="col-12">
+      <ul class="p-list is-split u-no-margin--bottom">
         <li class="p-list__item is-ticked">Fully asynchronous network and disk I/O</li>
         <li class="p-list__item is-ticked">Comprehensive test suite for correctness</li>
         <li class="p-list__item is-ticked">Benchmarked for memory footprint and network efficiency</li>
         <li class="p-list__item is-ticked">Persistent storage to disk for transaction logs</li>
         <li class="p-list__item is-ticked">Fast recovery for system restore</li>
-        <li class="p-list__item is-ticked">C, C++ and Golang bindings</li>
+        <li class="p-list__item is-ticked">Stable Golang client, documented wire protocol for other languages</li>
         <li class="p-list__item is-ticked">ARM, X86, POWER, Z</li>
       </ul>
     </div>
@@ -46,22 +46,7 @@ layout: base
 
 <section class="p-strip is-bordered">
   <div class="row">
-    <div class="col-12">
-      <h2 class="p-muted-heading u-align-text--center">AS USED BY</h2>
-      <ul class="p-inline-images">
-        <!-- Logos go here 
-          <li class="p-inline-images__item">
-            <img class="p-inline-images__logo" src="" alt="">
-          </li>
-        -->
-      </ul>
-    </div>
-  </div>
-</section>
-
-<section class="p-strip--light is-bordered">
-  <div class="row">
-    <ul class="p-matrix">
+    <ul class="p-matrix u-no-margin--bottom">
       <li class="p-matrix__item">
         <div class="p-matrix__content">
           <h3 class="p-matrix__title">Ultra-low latency</h3>
@@ -74,7 +59,7 @@ layout: base
         <div class="p-matrix__content">
           <h3 class="p-matrix__title">Portable</h3>
           <div class="p-matrix__desc">
-            <p>C-RAFT and sqlite are both written in C for maximum cross-platform portability.</p>
+            <p>C-RAFT and dqlite are both written in C for maximum cross-platform portability.</p>
           </div>
         </div>
       </li>
@@ -98,7 +83,7 @@ layout: base
         <div class="p-matrix__content">
           <h3 class="p-matrix__title">Fast failover</h3>
           <div class="p-matrix__desc">
-            <p>No more than 100ms delay on failover, and automatic selection of the new leader.</p>
+            <p>Minimal, tunable delay on failover with automatic selection of the new leader.</p>
           </div>
         </div>
       </li>
@@ -106,7 +91,7 @@ layout: base
           <div class="p-matrix__content">
             <h3 class="p-matrix__title">Persistence</h3>
             <div class="p-matrix__desc">
-              <p>Optional disk backing of the database for persistence, with SQLite’s transaction safety.</p>
+              <p>Disk-backed database with in-memory options and SQLite transactions.</p>
             </div>
           </div>
         </li>
@@ -114,22 +99,21 @@ layout: base
   </div>
 </section>
 
-<section class="p-strip is-bordered">
+<section class="p-strip--light is-bordered">
   <div class="row">
     <div class="col-7">
       <h2>Enterprise-grade SQL database availability for the Edge and IoT</h2>
-      <p>Modern edge computing is moving high-value applications to the edge of the network, where you often have far fewer guarantees about hardware availability and management. Appliances in the cabinet or in remote locations cannot be monitored and managed, or replaced very quickly, and often cannot have the same environmental controls. That makes the hardware less reliable, and increases the cost of human interventions.</p>
-      <p>Dqlite provides edge applications with an ultra-fast SQL database that is automatically replicated across multiple hosts, and guaranteed to provide an on-line backup for fast failover. SQLite is the world’s most widely used embedded SQL implementation. Dqlite adds robust consensus and failover semantics.</p>
+      <p>Modern edge computing moves high-value applications to the edge of the network, with fewer guarantees about hardware availability and management. Appliances in the cabinet or in remote locations cannot be monitored, managed, or replaced very quickly, and cannot assume strict environmental controls. That makes the hardware less reliable, and increases the cost of human intervention.</p>
+      <p>Dqlite provides edge applications an ultra-fast SQL database that is automatically replicated across multiple hosts and guarantees fast failover. SQLite is the world’s most widely used embedded SQL implementation. Dqlite extends SQLite with robust RAFT consensus and failover semantics.</p>
     </div>
   </div>
 </section>
 
-<section class="p-strip--light is-bordered">
-    <div class="row">
-      <div class="col-7">
-        <h2>Why RAFT?</h2>
-        <p>Consensus algorithms provide certainty of transaction replication so that it is always possible to guarantee data persistence in the event of the loss of a machine in the cluster. RAFT is widely considered the consensus algorithm of choice for efficiency and correctness of implementation. C-RAFT is a hand-tuned C implementation of RAFT that is fully asynchronous by design.
-            </p>
-      </div>
+<section class="p-strip is-bordered">
+  <div class="row">
+    <div class="col-7">
+      <h2>Why RAFT?</h2>
+      <p>Consensus algorithms provide certainty of transaction replication so that it is always possible to guarantee data persistence in the event of the loss of one or more machines in the cluster, as long as a majority survives. RAFT is widely considered the consensus algorithm of choice for efficiency and correctness of implementation. <a href="http://github.com/canonical/raft">C-RAFT</a> is a hand-tuned C implementation of RAFT that is fully asynchronous by design.</p>
     </div>
-  </section>
+  </div>
+</section>
