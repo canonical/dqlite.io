@@ -4,27 +4,8 @@
 // Import Vanilla
 @import 'vanilla-framework/scss/build';
 
-// Custom styles
-.p-navigation__banner {
-  background-color: $ubuntu-orange;
-}
-
 .p-navigation__logo {
-  font-weight: 400;
-  margin-right: $sph-inner--large;
-
-  @media only screen and (max-width: $breakpoint-medium) {
-    margin-bottom: -12px;
-    margin-top: 0;
-    max-height: 3rem;
-  }
-}
-
-.p-navigation__toggle {
-  &--open,
-  &--close {
-    font-weight: 400;
-  }
+  margin-right: 0;
 }
 
 .u-no-margin--bottom-small {
@@ -39,5 +20,13 @@
   &::before {
     content: "$";
     width: 3rem;
+  }
+}
+
+// XXX Remove the top border on a Matrix on small screesn
+// https://github.com/canonical-web-and-design/vanilla-framework/issues/2517
+.p-matrix {
+  &__item:first-of-type {
+    border-top: 0;
   }
 }
