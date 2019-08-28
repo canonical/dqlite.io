@@ -6,7 +6,7 @@ layout: base
   <div class="row u-equal-height">
     <div class="col-8">
       <h1>High-Availability SQLite</h1>
-      <p class="p-heading--four">Fast, embedded, persistent SQL database with Raft consensus for fault-tolerant IoT and Edge devices.</p>
+      <p class="p-heading--four">Dqlite is a fast, embedded, persistent SQL database with Raft consensus that is perfect for fault-tolerant IoT and Edge devices.</p>
     </div>
   </div>
 </section>
@@ -14,8 +14,7 @@ layout: base
 <section class="p-strip is-bordered">
   <div class="row">
     <div class="col-8">
-      <p>Dqlite (“distributed SQLite”) extends SQLite across a cluster of machines, with automatic failover and high availability to keep your application running.</p>
-      <p>It uses <a href="http://github.com/canonical/raft">C-Raft</a>, an optimised Raft implementation in C to gain high-performance transactional consensus and fault tolerance while preserving SQlite’s famous efficiency and footprint.</p>
+      <p>Dqlite (“distributed SQLite”) extends SQLite across a cluster of machines, with automatic failover and high-availability to keep your application running. It uses <a href="https://github.com/canonical/raft">C-Raft</a>, an optimised Raft implementation in C, to gain high-performance transactional consensus and fault tolerance while preserving SQlite’s  outstanding efficiency and tiny footprint.</p>
       <ul class="p-inline-list">
         <li class="p-inline-list__item"><a href="https://github.com/canonical/dqlite/blob/master/doc/index.md" class="p-button--positive u-no-margin--bottom-small">Docs</a></li>
         <li class="p-inline-list__item"><a href="https://github.com/canonical/dqlite/releases" class="p-button--neutral u-no-margin--bottom-small">Download</a></li>
@@ -34,8 +33,8 @@ layout: base
         <li class="p-list__item is-ticked">Benchmarked for memory footprint and network efficiency</li>
         <li class="p-list__item is-ticked">Persistent storage to disk for transaction logs</li>
         <li class="p-list__item is-ticked">Fast recovery for system restore</li>
-        <li class="p-list__item is-ticked">Stable Golang client, documented wire protocol for other languages</li>
-        <li class="p-list__item is-ticked">ARM, X86, POWER, Z</li>
+        <li class="p-list__item is-ticked">Stable Golang client and a documented wire protocol for other languages</li>
+        <li class="p-list__item is-ticked">Runs on ARM, X86, POWER and IBM Z architectures</li>
       </ul>
     </div>
   </div>
@@ -64,7 +63,7 @@ layout: base
         <div class="p-matrix__content">
           <h3 class="p-matrix__title">Open Source</h3>
           <div class="p-matrix__desc">
-            <p>Dual Apache/GPL licensed for maximum compatibility.</p>
+            <p>Released under the Apache 2.0 license for maximum compatibility.</p>
           </div>
         </div>
       </li>
@@ -80,7 +79,7 @@ layout: base
         <div class="p-matrix__content">
           <h3 class="p-matrix__title">Fast failover</h3>
           <div class="p-matrix__desc">
-            <p>Minimal and tunable delay on failover with automatic selection of the new leader.</p>
+            <p>Minimal and tunable delay for failover with automatic selection of the new leader.</p>
           </div>
         </div>
       </li>
@@ -99,9 +98,9 @@ layout: base
 <section class="p-strip--light is-bordered">
   <div class="row">
     <div class="col-7">
-      <h2>Enterprise-grade SQL database availability for the Edge and IoT</h2>
-      <p>Modern edge computing moves high-value applications to the edge of the network, with fewer guarantees about hardware availability and management. Appliances in the cabinet or in remote locations cannot be monitored, managed, or replaced very quickly, and cannot assume strict environmental controls. That makes the hardware less reliable, and increases the cost of human intervention.</p>
-      <p>Dqlite provides edge applications an ultra-fast SQL database that is automatically replicated across multiple hosts and guarantees fast failover. SQLite is the world’s most widely used embedded SQL implementation. Dqlite extends SQLite with robust Raft consensus and failover semantics.</p>
+      <h2>Enterprise-grade SQL database for the Edge and IoT</h2>
+      <p>Modern edge computing moves high-value applications to the edge of the network with fewer guarantees about hardware availability and management. Appliances in the cabinet or remote locations cannot be monitored, managed, or replaced very quickly, and cannot assume strict environmental controls. That makes the hardware less reliable and increases the cost of human intervention.</p>
+      <p>Dqlite provides edge applications with an ultra-fast SQL database that is automatically replicated across multiple hosts and guarantees fast failover. SQLite is the world’s most widely used embedded SQL implementation. Dqlite extends SQLite with robust Raft consensus and failover semantics.</p>
     </div>
   </div>
 </section>
@@ -110,7 +109,7 @@ layout: base
   <div class="row">
     <div class="col-7">
       <h2>Why Raft?</h2>
-      <p>Consensus algorithms provide certainty of transaction replication so that it is always possible to guarantee data persistence in the event of the loss of one or more machines in the cluster, as long as a majority survives. Raft is widely considered the consensus algorithm of choice for efficiency and correctness of implementation. <a href="http://github.com/canonical/raft">C-Raft</a> is a hand-tuned C implementation of Raft that is fully asynchronous by design.</p>
+      <p>Consensus algorithms provide certainty of transaction replication.  It ensures data persistence in the event of the loss of one or more machines in the cluster, as long as a majority survives. Raft is widely considered the consensus algorithm of choice for efficiency and correctness of implementation. <a href="http://github.com/canonical/raft">C-Raft</a> is a hand-tuned C implementation of Raft that is fully asynchronous by design.</p>
     </div>
   </div>
 </section>
