@@ -6,7 +6,7 @@ layout: base
   <div class="row u-equal-height">
     <div class="col-8">
       <h1>High-Availability SQLite</h1>
-      <p class="p-heading--four">Fast, embedded, persistent SQL database with RAFT consensus for high-availability IoT and Edge devices.</p>
+      <p class="p-heading--four">Fast, embedded, persistent SQL database with Raft consensus for fault-tolerant IoT and Edge devices.</p>
     </div>
   </div>
 </section>
@@ -15,7 +15,7 @@ layout: base
   <div class="row">
     <div class="col-8">
       <p>Dqlite (“distributed SQLite”) extends SQLite across a cluster of machines, with automatic failover and high availability to keep your application running.</p>
-      <p>It uses <a href="http://github.com/canonical/raft">C-RAFT</a>, an optimised RAFT implementation in C to gain high-performance transactional consensus and fault tolerance while preserving SQlite’s famous efficiency and footprint.</p>
+      <p>It uses <a href="http://github.com/canonical/raft">C-Raft</a>, an optimised Raft implementation in C to gain high-performance transactional consensus and fault tolerance while preserving SQlite’s famous efficiency and footprint.</p>
       <ul class="p-inline-list">
         <li class="p-inline-list__item"><a href="https://github.com/canonical/dqlite/blob/master/doc/index.md" class="p-button--positive u-no-margin--bottom-small">Docs</a></li>
         <li class="p-inline-list__item"><a href="https://github.com/canonical/dqlite/releases" class="p-button--neutral u-no-margin--bottom-small">Download</a></li>
@@ -48,7 +48,7 @@ layout: base
         <div class="p-matrix__content">
           <h3 class="p-matrix__title">Ultra-low latency</h3>
           <div class="p-matrix__desc">
-            <p>C-RAFT is tuned to minimize transaction latency. Expect 1G XXX updates per second on networks with SSDs.</p>
+            <p>C-Raft is tuned to minimize transaction latency. Expect 1G XXX updates per second on networks with SSDs.</p>
           </div>
         </div>
       </li>
@@ -56,7 +56,7 @@ layout: base
         <div class="p-matrix__content">
           <h3 class="p-matrix__title">Portable</h3>
           <div class="p-matrix__desc">
-            <p>C-RAFT and dqlite are both written in C for maximum cross-platform portability.</p>
+            <p>C-Raft and dqlite are both written in C for maximum cross-platform portability.</p>
           </div>
         </div>
       </li>
@@ -80,7 +80,7 @@ layout: base
         <div class="p-matrix__content">
           <h3 class="p-matrix__title">Fast failover</h3>
           <div class="p-matrix__desc">
-            <p>Minimal, tunable delay on failover with automatic selection of the new leader.</p>
+            <p>Minimal and tunable delay on failover with automatic selection of the new leader.</p>
           </div>
         </div>
       </li>
@@ -101,7 +101,7 @@ layout: base
     <div class="col-7">
       <h2>Enterprise-grade SQL database availability for the Edge and IoT</h2>
       <p>Modern edge computing moves high-value applications to the edge of the network, with fewer guarantees about hardware availability and management. Appliances in the cabinet or in remote locations cannot be monitored, managed, or replaced very quickly, and cannot assume strict environmental controls. That makes the hardware less reliable, and increases the cost of human intervention.</p>
-      <p>Dqlite provides edge applications an ultra-fast SQL database that is automatically replicated across multiple hosts and guarantees fast failover. SQLite is the world’s most widely used embedded SQL implementation. Dqlite extends SQLite with robust RAFT consensus and failover semantics.</p>
+      <p>Dqlite provides edge applications an ultra-fast SQL database that is automatically replicated across multiple hosts and guarantees fast failover. SQLite is the world’s most widely used embedded SQL implementation. Dqlite extends SQLite with robust Raft consensus and failover semantics.</p>
     </div>
   </div>
 </section>
@@ -109,8 +109,8 @@ layout: base
 <section class="p-strip is-bordered">
   <div class="row">
     <div class="col-7">
-      <h2>Why RAFT?</h2>
-      <p>Consensus algorithms provide certainty of transaction replication so that it is always possible to guarantee data persistence in the event of the loss of one or more machines in the cluster, as long as a majority survives. RAFT is widely considered the consensus algorithm of choice for efficiency and correctness of implementation. <a href="http://github.com/canonical/raft">C-RAFT</a> is a hand-tuned C implementation of RAFT that is fully asynchronous by design.</p>
+      <h2>Why Raft?</h2>
+      <p>Consensus algorithms provide certainty of transaction replication so that it is always possible to guarantee data persistence in the event of the loss of one or more machines in the cluster, as long as a majority survives. Raft is widely considered the consensus algorithm of choice for efficiency and correctness of implementation. <a href="http://github.com/canonical/raft">C-Raft</a> is a hand-tuned C implementation of Raft that is fully asynchronous by design.</p>
     </div>
   </div>
 </section>
