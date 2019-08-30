@@ -1,5 +1,7 @@
-Wire protocol
-=============
+---
+title: Wire protocol
+layout: docs
+---
 
 Definitions
 -----------
@@ -88,11 +90,13 @@ yielded by a query.
 
 For a tuple of parameters the format of the header is:
 
-- 8 bits: Number of values in the tuple.
-- 8 bits: Type code of the 1st value of the tuple.
-- 8 bits: Type code of the 2nd value of the tuple, or 0.
-- 8 bits: Type code of the 3rd value of the tuple, or 0.
-- ...
+| Size   | Content |
+|--------| ----------------------------- |
+| 8 bits | Number of values in the tuple |
+| 8 bits | Type code of the 1st value of the tuple |
+| 8 bits | Type code of the 2nd value of the tuple, or 0 |
+| 8 bits | Type code of the 3rd value of the tuple, or 0 |
+| ...    | |
 
 This repeats until reaching a full 64-bit word. If there are more than 7
 parameters to bind, the header will grow additional 64-bit words as needed,
@@ -101,10 +105,12 @@ parameters followed by a sequence of zero bits, until word boundary is reached.
 
 For a tuple of row values the format of the header is:
 
-- 4 bits: Type code of the 1st value of the tuple.
-- 4 bits: Type code of the 2nd value of the tuple, or 0.
-- 4 bits: Type code of the 3rd value of the tuple, or 0.
-- ...
+| Size   | Content |
+|--------| ----------------------------- |
+| 4 bits | Type code of the 1st value of the tuple |
+| 4 bits | Type code of the 2nd value of the tuple, or 0 |
+| 4 bits | Type code of the 3rd value of the tuple, or 0 |
+| ...    | |
 
 This repeats until reaching a full 64-bit word. If there are more than 16
 values, the header will grow additional 64-bit words as needed, following the
@@ -117,22 +123,240 @@ values in sequence, encoded using type-specific rules.
 The codes of available types for tuple values and the associated encoding
 formats are:
 
-- **1**: Integer value stored using the **int64** encoding.
-- **2**: An IEEE 754 floating point number stored in a single word (little endian).
-- **3**: A string value using the **text** encoding.
-- **4**: A binary blob: the first word of the value is the length of the blob (little endian).
-- **5**: A SQL NULL value encoded as a zeroed word.
-- **10**: An ISO-8601 date value using the **text** encoding.
-- **11**: A boolean value using **uint64** encoding (0 for false and 1 for true)
+| Code   | Value                         |
+|--------| ----------------------------- |
+| **1**  | Integer value stored using the **int64** encoding |
+| **2**  | An IEEE 754 floating point number stored in a single word (little endian) |
+| **3**  | A string value using the **text** encoding |
+| **4**  | A binary blob: the first word of the value is the length of the blob (little endian) |
+| **5**  | A SQL NULL value encoded as a zeroed word |
+| **10** | An ISO-8601 date value using the **text** encoding |
+| **11** | A boolean value using **uint64** encoding (0 for false and 1 for true) |
+
+### **node-info**
+
+Information about a node in the cluster. It consists of the node ID (in
+**uint64** encoding) followed by the node address (in **text** encoding).
+
+### **file**
+
+A single database file. It consists of the file name (in **text** encoding),
+followed by the file size (in **uint64** encoding) and finally a blob with the
+file content.
 
 Client messages
 ---------------
 
+The client can send to the server messages with the following type codes and
+associated schemas:
+
+### **0** - Get current leader
+
+| Type   | Value                         |
+|--------| ----------------------------- |
+| uint64 | Unused field |
+
+### **1** - Client registration
+
+| Type   | Value                         |
+|--------| ----------------------------- |
+| uint64 | ID of the client |
+
+### **3** - Open a database
+
+| Type  | Value                          |
+|-------|--------------------------------|
+| text | The name of the database |
+| uint64 | Currently unused |
+| text | Currently unused |
+
+### **0** - Get current leader
+
+| Type  | Value                          |
+|-------|--------------------------------|
+| uint64 | Unused field |
+
+### **1** - Client registration
+
+| Type  | Value                          |
+|-------|--------------------------------|
+| uint64 | ID of the client |
+
+### **3** - Open a database
+
+| Type  | Value                          |
+|-------|--------------------------------|
+| text | The name of the database |
+| uint64 | Currently unused |
+| text | Currently unused |
+
+### **4** - Prepare a statement
+
+| Type  | Value                          |
+|-------|--------------------------------|
+| uint64 | ID of the open database to use |
+| text | SQL text of the statement |
+
+### **5** - Execute a prepared statement
+
+| Type  | Value                          |
+|-------|--------------------------------|
+| uint32 | ID of the open database to use |
+| uint32 | ID of the prepared statement to execute |
+| tuple | A tuple of parameters to bind to the prepared statement |
+
+### **6** - Execute a prepared statement yielding rows
+
+| Type  | Value                          |
+|-------|--------------------------------|
+| uint32 | ID of the open database to use |
+| uint32 | ID of the prepared statement to execute |
+| tuple | A tuple of parameters to bind to the prepared statement |
+
+### **7** - Finalize a prepared statement
+
+| Type  | Value                          |
+|-------|--------------------------------|
+| uint32 | ID of the open database to use |
+| uint32 | ID of the prepared statement to finalize |
+
+### **8** - Execute a SQL text
+
+| Type  | Value                          |
+|-------|--------------------------------|
+| uint64 | ID of the open database to use |
+| text | SQL text to execute |
+| tuple | A tuple of parameters to bind |
+
+### **9** - Execute a SQL text yielding rows
+
+| Type  | Value                          |
+|-------|--------------------------------|
+| uint64 | ID of the open database to use |
+| text | SQL text to execute |
+| tuple | A tuple of parameters to bind |
+
+### **10** - Interrupt the execution of a statement yielding rows
+
+| Type  | Value                          |
+|-------|--------------------------------|
+| uint64 | ID of the open database currently executing the query |
+
+### **11** - Start pushing replication data
+
+| Type  | Value                          |
+|-------|--------------------------------|
+| node-info | ID and address of the node pushing the data |
+
+### **12** - Add a non-voting node to the cluster
+
+| Type  | Value                          |
+|-------|--------------------------------|
+| node-info | ID and address of the node to add |
+
+### **13** - Promote a non-voting node to voting
+
+| Type  | Value                          |
+|-------|--------------------------------|
+| uint64 | ID of the node to promote |
+
+### **14** - Remove a node from the cluster
+
+| Type  | Value                          |
+|-------|--------------------------------|
+| uint64 | ID of the node to remove |
+
+### **15** - Dump the content of a database
+
+| Type  | Value                          |
+|-------|--------------------------------|
+| text | Name of the database to dump |
+
+### **16** - List all nodes of the cluster
+
+| Type  | Value                          |
+|-------|--------------------------------|
+| uint64 | Currently unused |
+
 Server messages
 ---------------
 
-The server con send to the client the message with the following type codes:
+The server can send to the client messages with the following type codes and
+associated schemas:
 
-- **0**: Failure response. Schema:
-  - uint64: Code identifying the failure type.
-  - text: Human-readable failure message.
+### **0** - Failure response
+
+| Type  | Value                          |
+|-------|--------------------------------|
+| uint64 | Code identifying the failure type |
+| text | Human-readable failure message |
+
+### **1** - Node information
+
+| Type  | Value                          |
+|-------|--------------------------------|
+| node-info | Information about a single node |
+
+### **2** - Welcome
+
+| Type  | Value                          |
+|-------|--------------------------------|
+| uint64 | Currently unused |
+
+### **3** - Cluster information
+
+| Type  | Value                          |
+|-------|--------------------------------|
+| node-info | First node |
+| node-info | Second node (if any) |
+| ... | |
+
+### **4** - Database information
+
+| Type  | Value                          |
+|-------|--------------------------------|
+| uint32 | Database ID |
+| uint32 | Unused |
+
+### **5** - Prepared statement information
+
+| Type  | Value                          |
+|-------|--------------------------------|
+| uint32 | Database ID |
+| uint32 | Statement ID |
+| uint64 | Number of parameters |
+
+### **6** - Statement execution result
+
+| Type  | Value                          |
+|-------|--------------------------------|
+| uint64 | ID of last row inserted, or 0 |
+| uint64 | Number of rows affected or 0 |
+
+### **7** - Batch of table rows
+
+| Type  | Value                          |
+|-------|--------------------------------|
+| tuple | Column values of the first row in the batch |
+| tuple | Column values of the second row in the batch (if any) |
+| ... | |
+| uint64 | End marker |
+
+The end marker is the value ```0xffffffffffffffff``` if the statement currently
+yielding rows has completed and there are no more rows, or otherwise
+```0xeeeeeeeeeeeeeeee``` if there are more rows and another batch will be sent.
+
+### **8** - Aknowledgment
+
+| Type  | Value                          |
+|-------|--------------------------------|
+| uint64 | Unused |
+
+### **9** - Database files
+
+| Type  | Value                          |
+|-------|--------------------------------|
+| file | Main database file |
+| file | Write-ahead log file |
+
+

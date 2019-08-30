@@ -8,8 +8,7 @@
     "watch": "watch -p '_sass/**/*.scss' -c 'yarn run build'",
     "serve": "bundle exec jekyll serve -P ${PORT} -H 0.0.0.0",
     "test": "yarn run lint-scss",
-    "clean": "rm -rf node_modules yarn-error.log css js *.log *.sqlite _site/ build/ .jekyll-metadata .bundle",
-    "build-docs": "rm docs/*.md && git clone git@github.com:canonical/dqlite.git temp && mv temp/doc/* docs/ && rm -rf temp"
+    "clean": "rm -rf node_modules yarn-error.log css js *.log *.sqlite _site/ build/ .jekyll-metadata .bundle"
   },
   "dependencies": {
     "@canonical/global-nav": "^2.1.0",
