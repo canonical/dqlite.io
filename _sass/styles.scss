@@ -11,6 +11,37 @@
   margin-right: 0;
 }
 
+// Custom styles
+.p-navigation__banner {
+  background-color: $ubuntu-orange;
+}
+
+.p-navigation__logo {
+  font-weight: 400;
+  margin-right: $sph-inner--large;
+
+  @media only screen and (max-width: $breakpoint-medium) {
+    margin-bottom: -12px;
+    margin-top: 0;
+    max-height: 3rem;
+  }
+}
+
+.p-navigation__row,
+.p-navigation .row {
+  @media only screen and (min-width: $breakpoint-medium) {
+    padding-left: 0;
+    padding-right: 1.5rem;
+  }
+}
+
+.p-navigation__toggle {
+  &--open,
+  &--close {
+    font-weight: 400;
+  }
+}
+
 .u-no-margin--bottom-small {
   @media only screen and (min-width: $breakpoint-medium) {
     margin-bottom: 0 !important;
