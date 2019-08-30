@@ -3,6 +3,9 @@
 
 // Import Vanilla
 @import 'vanilla-framework/scss/build';
+@import 'docs-layout';
+
+@include dqlite-l-docs;
 
 .p-navigation__logo {
   margin-right: 0;
