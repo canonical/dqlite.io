@@ -30,7 +30,7 @@
 .p-navigation__row,
 .p-navigation .row {
   @media only screen and (min-width: $breakpoint-medium) {
-    padding-left: 1.5rem;
+    padding-left: 0;
     padding-right: 1.5rem;
   }
 }
