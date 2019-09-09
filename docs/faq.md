@@ -36,7 +36,7 @@ the relevant
 
 ## Are Windows and OSX supported?
 
-Not the moment, because under the hood dqlite uses the Linux-specific
+Not at the moment, because under the hood dqlite uses the Linux-specific
 `io_submit` asynchronous file system write API. That code leaves behind an
 interface that could be adapted to OSX and Windows though. See also this
 [issue](https://github.com/canonical/go-dqlite/issues/21).
