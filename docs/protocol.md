@@ -1,6 +1,7 @@
 ---
-title: Wire protocol
 layout: docs
+title: "Wire protocol"
+description: "Documentation about the wire protocol in dqlite"
 ---
 
 ## Definitions

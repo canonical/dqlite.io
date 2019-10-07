@@ -1,6 +1,7 @@
 ---
-title: FAQ
 layout: docs
+title: FAQ
+description: "Frequently asked questions about dqlite"
 ---
 
 ##### Table of Contents
