@@ -33,7 +33,7 @@ At the moment the biggest user of dqlite is the
 [LXD](https://linuxcontainers.org/lxd/introduction/) system containers manager,
 which uses dqlite to implement high-availability when run in cluster mode. See
 the relevant
-[documentation](https://github.com/lxc/lxd/blob/master/doc/clustering).
+[documentation](https://github.com/lxc/lxd/blob/master/doc/clustering.md).
 
 ## Are Windows and macOS supported?
 
