@@ -44,27 +44,9 @@
     }
   }
 
-  .l-docs-content {
-    flex: 5;
-    margin-top: 0;
-    overflow: hidden;
-
-    @media only screen and (max-width: $breakpoint-navigation-threshold) {
-      flex: auto;
-    }
-
-    .meta {
-      display: none;
-    }
-
-    details + p,
-    details + h3 {
-      margin-top: $sp-large;
-    }
-  }
-
   .l-docs-row {
     @extend .row;
+
     margin-left: inherit;
     padding: 0 $sp-xxx-large;
 
@@ -102,24 +84,24 @@
 
       &::before {
         background-color: #cdcdcd;
-        bottom: -.25rem;
+        bottom: -0.25rem;
         content: '';
         left: -1rem;
         position: absolute;
-        top: -.25rem;
-        width: .1875rem;
+        top: -0.25rem;
+        width: 0.1875rem;
       }
     }
 
     ul {
+      margin-bottom: 0.625rem;
       margin-left: 0;
       padding-left: 1rem;
-      margin-bottom: .625rem;
     }
 
     li {
-      padding-bottom: .125rem;
-      padding-top: .125rem;
+      padding-bottom: 0.125rem;
+      padding-top: 0.125rem;
     }
 
     h3 {
@@ -128,6 +110,25 @@
       line-height: 2;
       margin: 0;
       padding: 0;
+    }
+  }
+
+  .l-docs-content {
+    flex: 5;
+    margin-top: 0;
+    overflow: hidden;
+
+    @media only screen and (max-width: $breakpoint-navigation-threshold) {
+      flex: auto;
+    }
+
+    .meta {
+      display: none;
+    }
+
+    details + p,
+    details + h3 {
+      margin-top: $sp-large;
     }
   }
 }
