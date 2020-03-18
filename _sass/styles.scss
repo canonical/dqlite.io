@@ -22,7 +22,6 @@
       .p-navigation__logo {
         font-weight: 400;
         margin-right: 0;
-        
       }
 
       .p-navigation__toggle {
@@ -32,11 +31,11 @@
         }
       }
     }
-    
+
     .p-navigation__link a {
       height: 100%;
-      padding-left: $sph-inner--large ;
-      padding-right: $sph-inner--large ;
+      padding-left: $sph-inner--large;
+      padding-right: $sph-inner--large;
     }
   }
 }
