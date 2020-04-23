@@ -12,6 +12,12 @@
   background-color: $ubuntu-orange;
 }
 
+.p-side-navigation__drawer {
+  @media screen and (max-width: $breakpoint-medium) {
+    margin-top: 2rem;
+  }
+}
+
 .p-navigation {
   .p-navigation__row {
     padding: 0;

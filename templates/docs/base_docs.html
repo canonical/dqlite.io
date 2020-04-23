@@ -3,9 +3,17 @@
 {% block content %}
 <div class="row">
   <div class="col-3 p-strip is-shallow has-divider">
-    <div class="p-side-navigation " id="drawer">
-      <div class="p-side-navigation__overlay js-drawer-toggle" aria-controls="drawer"></div>
+    <div class="p-side-navigation" id="side-navigation">
+      <button class="p-side-navigation__toggle js-drawer-toggle" aria-controls="side-navigation">
+        Toggle side navigation
+      </button>
+      <div class="p-side-navigation__overlay js-drawer-toggle" aria-controls="side-navigation"></div>
       <div class="p-side-navigation__drawer">
+        <div class="p-side-navigation__drawer-header">
+          <button class="p-side-navigation__toggle--in-drawer js-drawer-toggle" aria-controls="side-navigation">
+            Toggle side navigation
+          </button>
+        </div>
         <ul class="p-side-navigation__list">
           <li class="p-side-navigation__item">
             <a class="p-side-navigation__link {% if request.path == '/docs' %}is-active{% endif %}" href="/docs">Home</a>
@@ -25,4 +33,6 @@
   </div>
 </div>
 <hr>
+
+<script src="{{ versioned_static('js/dist/base.js') }}"></script>
 {% endblock %}

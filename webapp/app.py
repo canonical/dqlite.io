@@ -1,6 +1,3 @@
-# Standard library
-import datetime
-
 # Packages
 from canonicalwebteam.flask_base.app import FlaskBase
 from flask import render_template
@@ -34,8 +31,3 @@ def faq():
 @app.route("/docs/protocol")
 def protocol():
     return render_template("docs/protocol.html")
-
-
-@app.context_processor
-def inject_today_date():
-    return {"current_year": datetime.date.today().year}

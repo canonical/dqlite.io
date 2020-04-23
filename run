@@ -41,7 +41,7 @@ Commands
 ##
 
 # Define docker images versions
-dev_image="canonicalwebteam/dev:v1.6.4"
+dev_image="canonicalwebteam/dev:v1.6.7"
 if [ -n "${DOCKER_REGISTRY:-}" ]; then
     dev_image="${DOCKER_REGISTRY}/${dev_image}"
 fi
@@ -179,6 +179,7 @@ start_django_db () {
                 --network ${network_name}    `# Use an isolated network`  \
                 --network-alias db           `# Call this container "db" on the network so it can be found`  \
                 --detach                     `# Run in the background` \
+                --env POSTGRES_HOST_AUTH_METHOD="trust"  `# Allow without a password`  \
                 postgres                     `# Use the image for node version 7`
         fi
 
@@ -189,7 +190,7 @@ start_django_db () {
         done
 
         # Provision database
-        run_as_user "${network}" python3 manage.py migrate
+        run_as_user "" python3 manage.py migrate
     fi
 }
 
