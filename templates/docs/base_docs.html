@@ -1,0 +1,28 @@
+{% extends 'base_layout.html' %}
+
+{% block content %}
+<div class="row">
+  <div class="col-3 p-strip is-shallow has-divider">
+    <div class="p-side-navigation " id="drawer">
+      <div class="p-side-navigation__overlay js-drawer-toggle" aria-controls="drawer"></div>
+      <div class="p-side-navigation__drawer">
+        <ul class="p-side-navigation__list">
+          <li class="p-side-navigation__item">
+            <a class="p-side-navigation__link {% if request.path == '/docs' %}is-active{% endif %}" href="/docs">Home</a>
+          </li>
+          <li class="p-side-navigation__item">
+            <a class="p-side-navigation__link {% if request.path == '/docs/faq' %}is-active{% endif %}" href="/docs/faq">FAQ</a>
+          </li>
+          <li class="p-side-navigation__item">
+            <a class="p-side-navigation__link {% if request.path == '/docs/protocol' %}is-active{% endif %}" href="/docs/protocol">Protocol</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="col-9 p-strip is-shallow">
+    {% block docs_content %}{% endblock docs_content %}
+  </div>
+</div>
+<hr>
+{% endblock %}

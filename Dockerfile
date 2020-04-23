@@ -1,57 +1,21 @@
-# syntax=docker/dockerfile:experimental
-
-# Build stage: Install ruby dependencies
-# ===
-FROM ruby:2.5 AS build-site
-WORKDIR /srv
-ADD . .
-RUN bundle install
-RUN bundle exec jekyll build
-
-# Build stage: Install yarn dependencies
-# ===
-FROM node:12-slim AS yarn-dependencies
-WORKDIR /srv
-ADD package.json .
-RUN --mount=type=cache,target=/usr/local/share/.cache/yarn yarn install
-
-# Build stage: Run "yarn run build-js"
-# ===
-FROM yarn-dependencies AS build-js
-WORKDIR /srv
-COPY . .
-RUN yarn run build-js
-
-# Build stage: Run "yarn run build-css"
-# ===
-FROM yarn-dependencies AS build-css
-WORKDIR /srv
-COPY . .
-RUN yarn run build-css
-
-# Build the production image
-# ===
-FROM ubuntu:focal
+FROM ubuntu:bionic
 
 # Set up environment
 ENV LANG C.UTF-8
 WORKDIR /srv
 
-# Install nginx
-RUN apt-get update && apt-get install --no-install-recommends --yes nginx
+# System dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends python3 python3-setuptools python3-pip
 
-# Import code, build assets and mirror list
-RUN rm -rf package.json yarn.lock .babelrc webpack.config.js Gemfile.lock nginx.conf
-COPY --from=build-site srv/_site .
-COPY --from=build-css srv/css css
-COPY --from=build-js srv/js js
+# Set git commit ID
+ARG COMMIT_ID
+ENV COMMIT_ID "${COMMIT_ID}"
+ENV TALISKER_REVISION_ID "${COMMIT_ID}"
 
-ARG BUILD_ID
-ADD nginx.conf /etc/nginx/sites-enabled/default
-RUN sed -i "s/~BUILD_ID~/${BUILD_ID}/" /etc/nginx/sites-enabled/default
+# Import code, install code dependencies
+COPY . .
+RUN python3 -m pip install --no-cache-dir -r requirements.txt
 
-STOPSIGNAL SIGTERM
-
-CMD ["nginx", "-g", "daemon off;"]
-
-
+# Setup commands to run server
+ENTRYPOINT ["./entrypoint"]
+CMD ["0.0.0.0:80"]
