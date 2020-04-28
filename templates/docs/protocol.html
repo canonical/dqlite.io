@@ -1,0 +1,695 @@
+{% extends 'docs/base_docs.html' %}
+
+{% block title %}Wire protocol | Dqlite{% endblock %}
+
+{% block meta_description %}Documentation about the wire protocol in dqlite{% endblock %}
+
+{% block docs_content %}
+<h1>Wire protocol</h1>
+
+<h2 id="definitions">Definitions</h2>
+<p>The following terms are used in this document:</p>
+<ul>
+  <li>
+    <p><strong>server</strong>: A dqlite node.</p>
+  </li>
+  <li>
+    <p><strong>client</strong>: Either application code (typically wanting to issue database queries) or a dqlite node (typically pushing replicational data).</p>
+  </li>
+  <li>
+    <p><strong>connection</strong>: A TCP or Unix socket connection established by the client against a server.</p>
+  </li>
+  <li>
+    <p><strong>word</strong>: A sequence of 8 bytes.</p>
+  </li>
+  <li>
+    <p><strong>protocol version</strong>: A positive number stored in a word using little endian representation.</p>
+  </li>
+  <li>
+    <p><strong>message</strong>: A sequence of bytes sent either by the client to the server or by the server to the client. It consists of a header and a body. The header consists of a single word with the following layout:</p>
+    <ul>
+      <li>
+        <p>byte 0 to 3: Size of the message body, expressed in words and stored using little endian representation. For example a value of [2 1 0 0] means that the message body consists of 258 bytes.</p>
+      </li>
+      <li>
+        <p>byte 4: Type code identifiying the schema of the message body.</p>
+      </li>
+      <li>
+        <p>byte 5: Revision number of the message body schema. Within the same protocol version, a new schema revision can only add fields to the previous revision. So a client capable of understanding up to revision N of a certain message schema can still handle messages with revision &gt;N by simply ignoring the extra bytes.</p>
+      </li>
+      <li>
+        <p>byte 6 to 7: Currently unused.</p>
+      </li>
+    </ul>
+    <p>The message body is a sequence of fields as described by the associated schema. Message types and their schemas are listed below.</p>
+  </li>
+</ul>
+
+<h2 id="setup">Setup</h2>
+<p>
+  As soon as a connection is established, the client must send to the server a single word containing the protocol version it wishes to use.
+</p>
+
+<h2 id="conversation">Conversation</h2>
+<p>
+  After the setup, communication between client and server happens by message exchange. Typically the client will send to the server a message containing a request and the server will send to the client a message containing a response.
+</p>
+
+<h2 id="data-types">Data types</h2>
+<p>
+  Each field in a message body has a specific data type, as described in the message schema. Available data types are:
+</p>
+<h3 id="uint64"><strong>uint64</strong></h3>
+<p>
+  A single word containing an unsigned integer in little endian representation.
+</p>
+<h3 id="int64"><strong>int64</strong></h3>
+<p>
+  A single word containing a two-complement signed integer in little endian representation.
+</p>
+<h3 id="uint32"><strong>uint32</strong></h3>
+<p>
+  Four bytes containing an unsigned integer in little endian
+  representation.
+</p>
+<h3 id="text"><strong>text</strong></h3>
+<p>
+  A sequence of one or more words containing a UTF-8 encoded zero-terminated string. All bytes past the terminating zero byte are zeroed as well.
+</p>
+<h3 id="tuple"><strong>tuple</strong></h3>
+<p>A tuple is composed by a header and a body.</p>
+<p>
+  The format of the header changes depending on whether the tuple is a sequence of parameters to bind to a statement, or a sequence of values of a single row yielded by a query.
+</p>
+<p>For a tuple of parameters the format of the header is:</p>
+<table>
+  <thead>
+    <tr>
+      <th>Size</th>
+      <th>Content</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>8 bits</td>
+      <td>Number of values in the tuple</td>
+    </tr>
+    <tr>
+      <td>8 bits</td>
+      <td>Type code of the 1st value of the tuple</td>
+    </tr>
+    <tr>
+      <td>8 bits</td>
+      <td>Type code of the 2nd value of the tuple, or 0</td>
+    </tr>
+    <tr>
+      <td>8 bits</td>
+      <td>Type code of the 3rd value of the tuple, or 0</td>
+    </tr>
+    <tr>
+      <td>…</td>
+      <td>&nbsp;</td>
+    </tr>
+  </tbody>
+</table>
+<p>
+  This repeats until reaching a full 64-bit word. If there are more than 7 parameters to bind, the header will grow additional 64-bit words as needed,following the same pattern: a sequence of 8-bit slots with type codes of the parameters followed by a sequence of zero bits, until word boundary is reached.
+</p>
+<p>For a tuple of row values the format of the header is:</p>
+<table>
+  <thead>
+    <tr>
+      <th>Size</th>
+      <th>Content</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>4 bits</td>
+      <td>Type code of the 1st value of the tuple</td>
+    </tr>
+    <tr>
+      <td>4 bits</td>
+      <td>Type code of the 2nd value of the tuple, or 0</td>
+    </tr>
+    <tr>
+      <td>4 bits</td>
+      <td>Type code of the 3rd value of the tuple, or 0</td>
+    </tr>
+    <tr>
+      <td>…</td>
+      <td>&nbsp;</td>
+    </tr>
+  </tbody>
+</table>
+<p>
+  This repeats until reaching a full 64-bit word. If there are more than 16 values, the header will grow additional 64-bit words as needed, following the same pattern: a sequence of 4-bit slots with type codes of the values followed by a sequence of zero bits, until word boundary is reached.
+</p>
+<p>
+  After the header the body follows immediately, which contains all parameters or values in sequence, encoded using type-specific rules.
+</p>
+<p>
+  The codes of available types for tuple values and the associated encoding formats are:
+</p>
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>1</strong></td>
+      <td>Integer value stored using the <strong>int64</strong> encoding</td>
+    </tr>
+    <tr>
+      <td><strong>2</strong></td>
+      <td>An IEEE 754 floating point number stored in a single word (little endian)</td>
+    </tr>
+    <tr>
+      <td><strong>3</strong></td>
+      <td>A string value using the <strong>text</strong> encoding</td>
+    </tr>
+    <tr>
+      <td><strong>4</strong></td>
+      <td>A binary blob: the first word of the value is the length of the blob (little endian)</td>
+    </tr>
+    <tr>
+      <td><strong>5</strong></td>
+      <td>A SQL NULL value encoded as a zeroed word</td>
+    </tr>
+    <tr>
+      <td><strong>10</strong></td>
+      <td>An ISO-8601 date value using the <strong>text</strong> encoding</td>
+    </tr>
+    <tr>
+      <td><strong>11</strong></td>
+      <td>A boolean value using <strong>uint64</strong> encoding (0 for false and 1 for true)</td>
+    </tr>
+  </tbody>
+</table>
+<h3 id="node-info"><strong>node-info</strong></h3>
+<p>
+  Information about a node in the cluster. It consists of the node ID (in <strong>uint64</strong> encoding) followed by the node address (in <strong>text</strong> encoding).
+</p>
+<h3 id="file"><strong>file</strong></h3>
+<p>
+  A single database file. It consists of the file name (in <strong>text</strong> encoding), followed by the file size (in <strong>uint64</strong> encoding) and finally a blob with the file content.
+</p>
+
+<h2 id="client-messages">Client messages</h2>
+<p>
+  The client can send to the server messages with the following type codes and associated schemas:
+</p>
+<h3 id="0---get-current-leader"><strong>0</strong> - Get current leader</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>uint64</td>
+      <td>Unused field</td>
+    </tr>
+  </tbody>
+</table>
+<h3 id="1---client-registration"><strong>1</strong> - Client registration</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>uint64</td>
+      <td>ID of the client</td>
+    </tr>
+  </tbody>
+</table>
+<h3 id="3---open-a-database"><strong>3</strong> - Open a database</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>text</td>
+      <td>The name of the database</td>
+    </tr>
+    <tr>
+      <td>uint64</td>
+      <td>Currently unused</td>
+    </tr>
+    <tr>
+      <td>text</td>
+      <td>Currently unused</td>
+    </tr>
+  </tbody>
+</table>
+<h3 id="4---prepare-a-statement"><strong>4</strong> - Prepare a statement</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>uint64</td>
+      <td>ID of the open database to use</td>
+    </tr>
+    <tr>
+      <td>text</td>
+      <td>SQL text of the statement</td>
+    </tr>
+  </tbody>
+</table>
+<h3 id="5---execute-a-prepared-statement"><strong>5</strong> - Execute a prepared statement</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>uint32</td>
+      <td>ID of the open database to use</td>
+    </tr>
+    <tr>
+      <td>uint32</td>
+      <td>ID of the prepared statement to execute</td>
+    </tr>
+    <tr>
+      <td>tuple</td>
+      <td>A tuple of parameters to bind to the prepared statement</td>
+    </tr>
+  </tbody>
+</table>
+<h3 id="6---execute-a-prepared-statement-yielding-rows"><strong>6</strong> - Execute a prepared statement yielding rows</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>uint32</td>
+      <td>ID of the open database to use</td>
+    </tr>
+    <tr>
+      <td>uint32</td>
+      <td>ID of the prepared statement to execute</td>
+    </tr>
+    <tr>
+      <td>tuple</td>
+      <td>A tuple of parameters to bind to the prepared statement</td>
+    </tr>
+  </tbody>
+</table>
+<h3 id="7---finalize-a-prepared-statement"><strong>7</strong> - Finalize a prepared statement</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>uint32</td>
+      <td>ID of the open database to use</td>
+    </tr>
+    <tr>
+      <td>uint32</td>
+      <td>ID of the prepared statement to finalize</td>
+    </tr>
+  </tbody>
+</table>
+<h3 id="8---execute-a-sql-text"><strong>8</strong> - Execute a SQL text</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>uint64</td>
+      <td>ID of the open database to use</td>
+    </tr>
+    <tr>
+      <td>text</td>
+      <td>SQL text to execute</td>
+    </tr>
+    <tr>
+      <td>tuple</td>
+      <td>A tuple of parameters to bind</td>
+    </tr>
+  </tbody>
+</table>
+<h3 id="9---execute-a-sql-text-yielding-rows"><strong>9</strong> - Execute a SQL text yielding rows</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>uint64</td>
+      <td>ID of the open database to use</td>
+    </tr>
+    <tr>
+      <td>text</td>
+      <td>SQL text to execute</td>
+    </tr>
+    <tr>
+      <td>tuple</td>
+      <td>A tuple of parameters to bind</td>
+    </tr>
+  </tbody>
+</table>
+<h3 id="10---interrupt-the-execution-of-a-statement-yielding-rows"><strong>10</strong> - Interrupt the execution of a statement yielding rows</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>uint64</td>
+      <td>ID of the open database currently executing the query</td>
+    </tr>
+  </tbody>
+</table>
+<h3 id="11---start-pushing-replication-data"><strong>11</strong> - Start pushing replication data</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>node-info</td>
+      <td>ID and address of the node pushing the data</td>
+    </tr>
+  </tbody>
+</table>
+<h3 id="12---add-a-non-voting-node-to-the-cluster"><strong>12</strong> - Add a non-voting node to the cluster</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>node-info</td>
+      <td>ID and address of the node to add</td>
+    </tr>
+  </tbody>
+</table>
+<h3 id="13---promote-a-non-voting-node-to-voting"><strong>13</strong> - Promote a non-voting node to voting</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>uint64</td>
+      <td>ID of the node to promote</td>
+    </tr>
+  </tbody>
+</table>
+<h3 id="14---remove-a-node-from-the-cluster"><strong>14</strong> - Remove a node from the cluster</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>uint64</td>
+      <td>ID of the node to remove</td>
+    </tr>
+  </tbody>
+</table>
+<h3 id="15---dump-the-content-of-a-database"><strong>15</strong> - Dump the content of a database</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>text</td>
+      <td>Name of the database to dump</td>
+    </tr>
+  </tbody>
+</table>
+<h3 id="16---list-all-nodes-of-the-cluster"><strong>16</strong> - List all nodes of the cluster</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>uint64</td>
+      <td>Currently unused</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="server-messages">Server messages</h2>
+<p>
+  The server can send to the client messages with the following type codes and associated schemas:
+</p>
+<h3 id="0---failure-response"><strong>0</strong> - Failure response</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>uint64</td>
+      <td>Code identifying the failure type</td>
+    </tr>
+    <tr>
+      <td>text</td>
+      <td>Human-readable failure message</td>
+    </tr>
+  </tbody>
+</table>
+<h3 id="1---node-information"><strong>1</strong> - Node information</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>node-info</td>
+      <td>Information about a single node</td>
+    </tr>
+  </tbody>
+</table>
+<h3 id="2---welcome"><strong>2</strong> - Welcome</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>uint64</td>
+      <td>Currently unused</td>
+    </tr>
+  </tbody>
+</table>
+<h3 id="3---cluster-information"><strong>3</strong> - Cluster information</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>node-info</td>
+      <td>First node</td>
+    </tr>
+    <tr>
+      <td>node-info</td>
+      <td>Second node (if any)</td>
+    </tr>
+    <tr>
+      <td>…</td>
+      <td>&nbsp;</td>
+    </tr>
+  </tbody>
+</table>
+<h3 id="4---database-information"><strong>4</strong> - Database information</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>uint32</td>
+      <td>Database ID</td>
+    </tr>
+    <tr>
+      <td>uint32</td>
+      <td>Unused</td>
+    </tr>
+  </tbody>
+</table>
+<h3 id="5---prepared-statement-information"><strong>5</strong> - Prepared statement information</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>uint32</td>
+      <td>Database ID</td>
+    </tr>
+    <tr>
+      <td>uint32</td>
+      <td>Statement ID</td>
+    </tr>
+    <tr>
+      <td>uint64</td>
+      <td>Number of parameters</td>
+    </tr>
+  </tbody>
+</table>
+<h3 id="6---statement-execution-result"><strong>6</strong> - Statement execution result</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>uint64</td>
+      <td>ID of last row inserted, or 0</td>
+    </tr>
+    <tr>
+      <td>uint64</td>
+      <td>Number of rows affected or 0</td>
+    </tr>
+  </tbody>
+</table>
+<h3 id="7---batch-of-table-rows"><strong>7</strong> - Batch of table rows</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>tuple</td>
+      <td>Column values of the first row in the batch</td>
+    </tr>
+    <tr>
+      <td>tuple</td>
+      <td>Column values of the second row in the batch (if any)</td>
+    </tr>
+    <tr>
+      <td>…</td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td>uint64</td>
+      <td>End marker</td>
+    </tr>
+  </tbody>
+</table>
+<p>
+  The end marker is the value <code>0xffffffffffffffff</code> if the statement currently yielding rows has completed and there are no more rows, or otherwise  <code>0xeeeeeeeeeeeeeeee</code> if there are more rows and another batch will be sent.
+</p>
+<h3 id="8---aknowledgment"><strong>8</strong> - Aknowledgment</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>uint64</td>
+      <td>Unused</td>
+    </tr>
+  </tbody>
+</table>
+<h3 id="9---database-files"><strong>9</strong> - Database files</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>file</td>
+      <td>Main database file</td>
+    </tr>
+    <tr>
+      <td>file</td>
+      <td>Write-ahead log file</td>
+    </tr>
+  </tbody>
+</table>
+{% endblock docs_content %}

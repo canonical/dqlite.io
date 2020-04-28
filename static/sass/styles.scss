@@ -3,13 +3,16 @@
 
 // Import Vanilla
 @import "vanilla-framework/scss/build";
-@import "docs-layout";
-
-@include dqlite-l-docs;
 
 // Custom styles
 .p-navigation__banner {
   background-color: $ubuntu-orange;
+}
+
+.p-side-navigation__drawer {
+  @media screen and (max-width: $breakpoint-medium) {
+    margin-top: 2rem;
+  }
 }
 
 .p-navigation {

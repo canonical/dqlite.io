@@ -1,0 +1,21 @@
+{% extends 'docs/base_docs.html' %}
+
+{% block title %}Dqlite documentation | Dqlite{% endblock %}
+
+{% block meta_description %}Documentation and faqs for dqlite{% endblock %}
+
+{% block docs_content %}
+  <h1>Dqlite documentation</h1>
+  <p>
+    If you want to see dqlite in action, please check out the <a href="https://github.com/canonical/go-dqlite#demo">demo program</a> that comes with the Go dqlite bindings. Alternatively, you can watch the <a href="https://fosdem.org/2020/schedule/event/dqlite/">talk about dqlite</a> that was given at FOSDEM 2020.
+  </p>
+  <p>
+    If you're writing an application please refer to the dqlite C <a href="https://github.com/canonical/dqlite/blob/master/include/dqlite.h">header file</a> or the <a href="https://github.com/canonical/go-dqlite">go-dqlite</a> Go bindings.
+  </p>
+  <p>
+    If you're writing a dqlite client for a new language, please refer to the <a href="/docs/protocol">wire protocol</a> description.
+  </p>
+  <p>
+    If you have questions about dqlite, please have a look at the <a href="/docs/faq">FAQ</a> before filing issues.
+  </p>
+{% endblock docs_content %}
