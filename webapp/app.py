@@ -21,7 +21,7 @@ app = FlaskBase(
 doc_parser = DocParser(
     api=DiscourseAPI(base_url="https://discourse.dqlite.io/"),
     index_topic_id=21,
-    category_id=2,
+    category_id=5,
     url_prefix="/docs",
 )
 if app.debug:

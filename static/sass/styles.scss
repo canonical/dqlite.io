@@ -4,8 +4,10 @@
 // Import Vanilla
 @import "vanilla-framework/scss/build";
 @import "layout_docs";
+@import "patterns_sidenav";
 
-@include maas-l-docs;
+@include dqlite-l-docs;
+@include dqlite-p-sidenav;
 
 // Custom styles
 .p-navigation__banner {
