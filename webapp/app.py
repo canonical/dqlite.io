@@ -37,18 +37,3 @@ discourse_docs.init_app(app)
 @app.route("/")
 def index():
     return render_template("index.html")
-
-
-# @app.route("/docs")
-# def docs():
-#     return render_template("docs/index.html")
-
-
-# @app.route("/docs/faq")
-# def faq():
-#     return render_template("docs/faq.html")
-
-
-# @app.route("/docs/protocol")
-# def protocol():
-#     return render_template("docs/protocol.html")
