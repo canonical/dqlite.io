@@ -1,0 +1,19 @@
+@mixin dqlite-l-docs {
+  .p-side-navigation#drawer {
+    ul {
+      @extend .p-side-navigation__list;
+    }
+
+    li {
+      @extend .p-side-navigation__item;
+
+      &:first-of-type {
+        @extend .p-side-navigation__item--title;
+      }
+    }
+
+    a {
+      @extend .p-side-navigation__link;
+    }
+  }
+}

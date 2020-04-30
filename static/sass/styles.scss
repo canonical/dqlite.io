@@ -3,6 +3,9 @@
 
 // Import Vanilla
 @import "vanilla-framework/scss/build";
+@import "layout_docs";
+
+@include dqlite-l-docs;
 
 // Custom styles
 .p-navigation__banner {
