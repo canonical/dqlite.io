@@ -8,7 +8,7 @@
 <div class="p-strip is-shallow">
   <div class="row">
     <aside class="col-3">
-      <nav class="p-side-navigation" id="drawer">
+      <nav class="p-side-navigation--raw-html" id="drawer">
         <button class="p-side-navigation__toggle js-drawer-toggle" aria-controls="drawer">
           Toggle side navigation
         </button>
@@ -40,7 +40,7 @@
 </div>
 <script src="/static/js/highlight.pack.js"></script>
 <script>
-  /**
+/**
   Toggles the expanded/collapsed classed on side navigation element.
 
   @param {HTMLElement} sideNavigation The side navigation element.
@@ -77,28 +77,19 @@ function setupSideNavigation(sideNavigation) {
   });
 }
 
-/**
-  Attaches event listeners for all the side navigations in the document.
-  @param {String} sideNavigationSelector The CSS selector matching side navigation elements.
-*/
-function setupSideNavigations(sideNavigationSelector) {
-  // Setup all side navigations on the page.
-  var sideNavigations = [].slice.call(document.querySelectorAll(sideNavigationSelector));
+var sideNav = document.getElementById("drawer");
 
-  sideNavigations.forEach(setupSideNavigation);
-}
+setupSideNavigation(document.getElementById("drawer"));
 
-setupSideNavigations('.p-side-navigation, .p-side-navigation--icons');
+// Add active links to active nav item and scroll to section
+sideNav.querySelectorAll('a').forEach(function(anchor) {
+  if (anchor.pathname === location.pathname) {
+    anchor.setAttribute('aria-current', 'page');
+  }
+});
 </script>
 <script>
   // Set up highlightjs
   hljs.initHighlightingOnLoad();
-
-  // Add active links to active nav item and scroll to section
-  document.querySelectorAll('.p-side-navigation a').forEach(function(anchor) {
-    if (anchor.pathname === location.pathname) {
-      anchor.classList.add('is-active');
-    }
-  });
 </script>
 {% endblock %}
