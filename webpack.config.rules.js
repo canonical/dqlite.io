@@ -13,7 +13,7 @@ module.exports = [
   // loaders are evaluated from bottom to top (right to left)
   // so first transpile via babel, then expose as global
   {
-    test: __dirname + "/static/js/base.js",
+    test: require.resolve(__dirname + "/static/js/base.js"),
     use: ["expose-loader?dqlite.base", "babel-loader"],
   },
 ];
