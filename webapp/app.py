@@ -1,12 +1,13 @@
+import talisker.requests
+
 # Packages
 from canonicalwebteam.flask_base.app import FlaskBase
-from flask import render_template
-
 from canonicalwebteam.discourse_docs import (
     DiscourseDocs,
-    DocParser,
     DiscourseAPI,
+    DocParser,
 )
+from flask import render_template
 
 # Rename your project below
 app = FlaskBase(
@@ -17,15 +18,18 @@ app = FlaskBase(
     template_404="404.html",
     template_500="500.html",
 )
+session = talisker.requests.get_session()
 
 doc_parser = DocParser(
-    api=DiscourseAPI(base_url="https://discourse.dqlite.io/"),
+    api=DiscourseAPI(base_url="https://discourse.dqlite.io/", session=session),
     index_topic_id=21,
     category_id=5,
     url_prefix="/docs",
 )
+
 if app.debug:
     doc_parser.api.session.adapters["https://"].timeout = 99
+
 discourse_docs = DiscourseDocs(
     parser=doc_parser,
     document_template="docs/document.html",
