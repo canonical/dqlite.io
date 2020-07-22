@@ -1,4 +1,7 @@
 # dqlite.io
+
+[![Code coverage](https://codecov.io/gh/canonical-web-and-design/dqlite.io/branch/master/graph/badge.svg)](https://codecov.io/gh/canonical-web-and-design/dqlite.io)
+
 This is the repo for the [dqlite.io website](https://dqlite.io).
 
 ## Usage
