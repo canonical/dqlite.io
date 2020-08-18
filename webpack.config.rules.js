@@ -14,6 +14,9 @@ module.exports = [
   // so first transpile via babel, then expose as global
   {
     test: require.resolve(__dirname + "/static/js/base.js"),
-    use: ["expose-loader?dqlite.base", "babel-loader"],
+    loader: "expose-loader",
+    options: {
+      exposes: ["expose-loader?dqlite.base", "babel-loader"],
+    },
   },
 ];
