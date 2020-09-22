@@ -13,8 +13,8 @@
 # $ yo canonical-webteam:run
 
 set -euo pipefail
-
 USAGE="How to use ./run v3.4.2
+
 ===
   $ ./run \\
     [-e|--env VAR_NAME=value]  # Declare an environment variable to use while running commands \\
