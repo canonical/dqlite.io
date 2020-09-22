@@ -45,6 +45,7 @@ jobs:
       - name: Install node dependencies
         run: yarn install --immutable
 
+      - name: Install python dependencies
         run: |
           python3 -m pip install --upgrade pip
           sudo pip3 install flake8 black
