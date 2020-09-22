@@ -13,8 +13,8 @@
 # $ yo canonical-webteam:run
 
 set -euo pipefail
-
 USAGE="How to use ./run v3.4.2
+
 ===
   $ ./run \\
     [-e|--env VAR_NAME=value]  # Declare an environment variable to use while running commands \\
@@ -41,7 +41,7 @@ Commands
 ##
 
 # Define docker images versions
-dev_image="canonicalwebteam/dev:v1.6.7"
+dev_image="canonicalwebteam/dev:1.6.8"
 if [ -n "${DOCKER_REGISTRY:-}" ]; then
     dev_image="${DOCKER_REGISTRY}/${dev_image}"
 fi
