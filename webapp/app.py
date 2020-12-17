@@ -2,8 +2,8 @@ import talisker.requests
 
 # Packages
 from canonicalwebteam.flask_base.app import FlaskBase
-from canonicalwebteam.discourse_docs import (
-    DiscourseDocs,
+from canonicalwebteam.discourse import (
+    Docs,
     DiscourseAPI,
     DocParser,
 )
@@ -20,20 +20,18 @@ app = FlaskBase(
 )
 session = talisker.requests.get_session()
 
-doc_parser = DocParser(
-    api=DiscourseAPI(base_url="https://discourse.dqlite.io/", session=session),
-    index_topic_id=21,
-    category_id=5,
-    url_prefix="/docs",
-)
-
-if app.debug:
-    doc_parser.api.session.adapters["https://"].timeout = 99
-
-discourse_docs = DiscourseDocs(
-    parser=doc_parser,
+docs_url_prefix = "/docs"
+discourse_docs = Docs(
+    parser=DocParser(
+        api=DiscourseAPI(
+            base_url="https://discourse.dqlite.io/",
+            session=session,
+        ),
+        index_topic_id=34,
+        url_prefix=docs_url_prefix,
+    ),
     document_template="docs/document.html",
-    url_prefix="/docs",
+    url_prefix=docs_url_prefix,
 )
 discourse_docs.init_app(app)
 
