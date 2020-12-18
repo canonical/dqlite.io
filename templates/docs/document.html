@@ -9,12 +9,14 @@
   <ul>
     {% for element in nav_items %}
     <li>
-      <a
-        {% if element.navlink_href %}href="{{ element.navlink_href }}"{% endif %}
-        {% if request.path == element.navlink_href %}aria-current="page"{% endif %}
-      >
-      {{ element.navlink_text }}
-      </a>
+      {% if element.navlink_href %}
+        <a href="{{ element.navlink_href }}"
+          {% if request.path == element.navlink_href %}aria-current="page"{% endif %}
+        >{{ element.navlink_text }}</a>
+      {% else %}
+        <strong>{{ element.navlink_text }}</strong>
+      {% endif %}
+
       {% if element.children %}
         {{ create_navigation(element.children) }}
       {% endif %}
@@ -49,11 +51,11 @@
                 Toggle side navigation
               </a>
             </div>
-            {% for nav in version.nav_items %}
-              {% if nav.level == 0 %}
-              <h3>{{ nav.navlink_text }}</h3>
+            {% for nav_group in version.nav_items %}
+              {% if nav_group.navlink_text %}
+              <h3>{{ nav_group.navlink_text }}</h3>
               {% endif %}
-              {{ create_navigation(nav.children) }}
+              {{ create_navigation(nav_group.children) }}
             {% endfor %}
           </div>
         </nav>
