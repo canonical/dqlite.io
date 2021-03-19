@@ -7,6 +7,7 @@ from canonicalwebteam.discourse import (
     DiscourseAPI,
     DocParser,
 )
+from canonicalwebteam.search import build_search_view
 from flask import render_template
 
 # Rename your project below
@@ -33,6 +34,17 @@ discourse_docs = Docs(
     document_template="docs/document.html",
     url_prefix=docs_url_prefix,
 )
+
+app.add_url_rule(
+    "/docs/search",
+    "docs-search",
+    build_search_view(
+        session=session,
+        site="https://dqlite.io/docs",
+        template_path="docs/search.html",
+    ),
+)
+
 discourse_docs.init_app(app)
 
 

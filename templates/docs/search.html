@@ -10,7 +10,7 @@
 {% block title %}Search results{% if query %} for "{{query}}"{% endif %}{% endblock %}
 
 {% block content %}
-  <section id="search-docs" class="p-strip--image is-shallow" style="background-image: url('https://assets.ubuntu.com/v1/e54487e2-maas-docs-suru.png')">
+  <section id="search-docs" class="p-strip--light is-shallow">
     <div class="row">
       <form class="p-search-box u-no-margin--bottom" action="/docs/search">
         <input type="search" class="p-search-box__input" name="q" {% if query %}value="{{ query }}"{% endif %} placeholder="Search documentation" required/>
@@ -33,7 +33,7 @@
       </div>
     </div>
 
-    {% if  results and results.entries %}
+    {% if results and results.entries %}
         {% for item in results.entries %}
         <div class="p-strip is-bordered is-shallow">
           <div class="row">
@@ -80,8 +80,8 @@
         <div class="col-6">
           <h3>Still no luck?</h3>
           <ul class="p-list">
-            <li class="p-list__item is-ticked"><a href="/docs">Visit maas.io/docs</a></li>
-            <li class="p-list__item is-ticked"><a href="https://discourse.maas.io">Ask on the forum</a></li>
+            <li class="p-list__item is-ticked"><a href="/docs">Visit dqlite.io/docs</a></li>
+            <li class="p-list__item is-ticked"><a href="https://discourse.dqlite.io/">Ask on the forum</a></li>
           </ul>
         </div>
       </div>
