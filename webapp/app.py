@@ -25,10 +25,10 @@ docs_url_prefix = "/docs"
 discourse_docs = Docs(
     parser=DocParser(
         api=DiscourseAPI(
-            base_url="https://discourse.dqlite.io/",
+            base_url="https://discourse.ubuntu.com/",
             session=session,
         ),
-        index_topic_id=34,
+        index_topic_id=22723,
         url_prefix=docs_url_prefix,
     ),
     document_template="docs/document.html",
