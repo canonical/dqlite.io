@@ -1,5 +1,44 @@
 {
-  "extends": [
-    "github>canonical-web-and-design/renovate-websites"
-  ]
+    "extends": [
+        ":autodetectPinVersions",
+        ":combinePatchMinorReleases",
+        ":separateMajorReleases",
+        ":separateMultipleMajorReleases",
+        ":ignoreModulesAndTests",
+        ":ignoreUnstable",
+        ":prImmediately",
+        ":prHourlyLimitNone",
+        ":prConcurrentLimit20",
+        ":updateNotScheduled",
+        "helpers:disableTypesNodeMajor"
+    ],
+    "packageRules": [
+        {
+            "groupName": "all dependencies",
+            "groupSlug": "all",
+            "packagePatterns": ["*"],
+            "schedule": ["on the first day of january"]
+        },
+        {
+            "groupName": "internal dependencies",
+            "groupSlug": "internal",
+            "packagePatterns": [
+                "^@canonical",
+                "^canonicalwebteam",
+                "^vanilla-framework"
+            ],
+            "schedule": ["at any time"]
+        },
+        {
+            "depTypeList": ["devDependencies"],
+            "extends": [":automergeMinor"]
+        },
+        {
+            "matchUpdateTypes": ["patch", "pin", "digest"],
+            "automerge": true,
+            "excludePackagePatterns": [
+                "^vanilla-framework"
+            ]
+        }
+    ]
 }
