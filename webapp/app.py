@@ -8,7 +8,7 @@ from canonicalwebteam.discourse import (
     DocParser,
 )
 from canonicalwebteam.search import build_search_view
-from flask import render_template
+from flask import render_template, make_response
 
 # Rename your project below
 app = FlaskBase(
@@ -51,3 +51,21 @@ discourse_docs.init_app(app)
 @app.route("/")
 def index():
     return render_template("index.html")
+
+
+@app.route("/sitemap.xml")
+def sitemap_index():
+    xml_sitemap = render_template("sitemap/sitemap-index.xml")
+    response = make_response(xml_sitemap)
+    response.headers["Content-Type"] = "application/xml"
+
+    return response
+
+
+@app.route("/sitemap-links.xml")
+def sitemap_links():
+    xml_sitemap = render_template("sitemap/sitemap-links.xml")
+    response = make_response(xml_sitemap)
+    response.headers["Content-Type"] = "application/xml"
+
+    return response
