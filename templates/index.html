@@ -1,7 +1,7 @@
 {% extends 'base_layout.html' %}
 
 {% block content %}
-<section class="p-strip--image is-dark is-deep" style="background-image: url('https://assets.ubuntu.com/v1/8bc629a7-microk8s-suru-background.svg'); background-size: cover;">
+<section class="p-strip--image is-dark is-deep" style="background-image: url('https://assets.ubuntu.com/v1/8bc629a7-microk8s-suru-background.svg'); background-color: #000000; background-size: cover;">
   <div class="row u-equal-height">
     <div class="col-8">
       <h1>High-availability SQLite</h1>
@@ -18,17 +18,27 @@
 <section class="p-strip">
   <div class="row">
     <div class="col-8">
-      <p>Dqlite (“distributed SQLite”) extends SQLite across a cluster of machines, with automatic failover and high-availability to keep your application running. It uses <a href="https://github.com/canonical/raft">C-Raft</a>, an optimised Raft implementation in C, to gain high-performance transactional consensus and fault tolerance while preserving SQlite’s  outstanding efficiency and tiny footprint.</p>
+      <h2>Getting started</h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-8">
+      <p>Dqlite (distributed SQLite) extends SQLite across a cluster of machines, with automatic failover and high-availability to keep your application running. It uses <a href="https://github.com/canonical/raft" class="p-link--external" aria-label="External link to the C-Raft Github project page">C-Raft</a>, an optimised Raft implementation in C, to gain high-performance transactional consensus and fault tolerance while preserving SQlite’s  outstanding efficiency and tiny footprint.</p>
       <ul class="p-inline-list">
-        <li class="p-inline-list__item"><a href="/docs" class="p-button--positive u-no-margin--bottom-small">Docs</a></li>
-        <li class="p-inline-list__item"><a href="https://github.com/canonical/dqlite/releases" class="p-button--neutral u-no-margin--bottom-small">Download</a></li>
+        <li class="p-inline-list__item"><a href="/docs" class="p-button--positive u-no-margin--bottom-small">Read the Dqlite docs</a></li>
+        <li class="p-inline-list__item"><a href="https://github.com/canonical/dqlite/releases" class="p-button--neutral u-no-margin--bottom-small p-link--external" aria-label="External link to the Dqlite releases page on Github">Download Dqlite</a></li>
       </ul>
-      <p>or on Ubuntu: <div class="p-code-snippet"><pre class="p-code-snippet__block--icon"><code>sudo add-apt-repository -y ppa:dqlite/stable && sudo apt install dqlite</code></pre></div></p>
+      <p>install on Ubuntu: <div class="p-code-snippet"><pre class="p-code-snippet__block--icon"><code>sudo add-apt-repository -y ppa:dqlite/stable && sudo apt install dqlite</code></pre></div></p>
     </div>
   </div>
 </section>
 
 <section class="p-strip--light">
+  <div class="row">
+    <div class="col-8">
+      <h2>Key features</h2>
+    </div>
+  </div>
   <div class="row">
     <div class="col-12">
       <ul class="p-list is-split u-no-margin--bottom">
@@ -45,6 +55,11 @@
 </section>
 
 <section class="p-strip">
+  <div class="row">
+    <div class="col-8">
+      <h2>Why use Dqlite</h2>
+    </div>
+  </div>
   <div class="row">
     <ul class="p-matrix u-no-margin--bottom">
       <li class="p-matrix__item">
@@ -113,7 +128,7 @@
   <div class="row">
     <div class="col-7">
       <h2>Why Raft?</h2>
-      <p>Consensus algorithms provide certainty of transaction replication.  It ensures data persistence in the event of the loss of one or more machines in the cluster, as long as a majority survives. Raft is widely considered the consensus algorithm of choice for efficiency and correctness of implementation. <a href="http://github.com/canonical/raft">C-Raft</a> is a hand-tuned C implementation of Raft that is fully asynchronous by design.</p>
+      <p>Consensus algorithms provide certainty of transaction replication. It ensures data persistence in the event of the loss of one or more machines in the cluster, as long as a majority survives. Raft is widely considered the consensus algorithm of choice for efficiency and correctness of implementation. <a href="http://github.com/canonical/raft" aria-label="External link to the C-Raft Github project page" class="p-link--external">C-Raft</a> is a hand-tuned C implementation of Raft that is fully asynchronous by design.</p>
     </div>
   </div>
 </section>
