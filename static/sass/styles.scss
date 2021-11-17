@@ -14,6 +14,10 @@
   padding-right: 33px !important;
 }
 
+.skip-content {
+  background-color: $color-x-light;
+}
+
 .p-navigation {
   .p-navigation__row {
     padding: 0;
@@ -22,7 +26,8 @@
       padding: 0 $sph-inner--large;
 
       .p-navigation__logo {
-        font-weight: 400;
+        font-size: 19px;
+        font-weight: 700;
         margin-right: 0;
       }
 
@@ -45,13 +50,5 @@
 .u-no-margin--bottom-small {
   @media only screen and (min-width: $breakpoint-medium) {
     margin-bottom: 0 !important;
-  }
-}
-
-// XXX Remove the top border on a Matrix on small screesn
-// https://github.com/canonical-web-and-design/vanilla-framework/issues/2517
-.p-matrix {
-  &__item:first-of-type {
-    border-top: 0;
   }
 }
