@@ -2,7 +2,7 @@
   <div class="p-navigation__row">
     <div class="p-navigation__banner">
       <div class="p-navigation__logo u-vertically-center">
-        <a class="p-navigation__link" href="/" style="color:white;" aria-label="Back to homepage">
+        <a class="p-navigation__item" href="/" style="color:white;" aria-label="Back to homepage">
           Dqlite
         </a>
       </div>
@@ -13,18 +13,18 @@
       <span class="u-off-screen">
         <a href="#main-content" class="p-link--inverted">Jump to main content</a>
       </span>
-      <ul class="p-navigation__links" role="menu">
-        <li class="p-navigation__link {% if request.path in ['/docs', '/docs/faq', '/docs/protocol'] %}is-selected{% endif %}" role="menuitem">
-          <a href="/docs">Docs</a>
+      <ul class="p-navigation__items" role="menu">
+        <li class="p-navigation__item {% if request.path in ['/docs', '/docs/faq', '/docs/protocol'] %}is-selected{% endif %}" role="menuitem">
+          <a href="/docs" class="p-navigation__link">Docs</a>
         </li>
-        <li class="p-navigation__link" role="menuitem">
-          <a href="https://discourse.dqlite.io">Discourse</a>
+        <li class="p-navigation__item" role="menuitem">
+          <a href="https://discourse.dqlite.io" class="p-navigation__link">Discourse</a>
         </li>
-        <li class="p-navigation__link" role="menuitem">
-          <a class="p-link--external" href="https://github.com/canonical/dqlite">Code</a>
+        <li class="p-navigation__item" role="menuitem">
+          <a href="https://github.com/canonical/dqlite" class="p-navigation__link">Code</a>
         </li>
-        <li class="p-navigation__link" role="menuitem">
-          <a class="p-link--external" href="https://github.com/canonical/dqlite/issues">Bugs</a>
+        <li class="p-navigation__item" role="menuitem">
+          <a href="https://github.com/canonical/dqlite/issues" class="p-navigation__link">Bugs</a>
         </li>
       </ul>
     </nav>

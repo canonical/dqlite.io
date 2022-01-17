@@ -5,7 +5,7 @@
   <div class="row u-equal-height">
     <div class="col-8">
       <h1>High-availability SQLite</h1>
-      <p class="p-heading--four u-sv3">Dqlite is a fast, embedded, persistent SQL database with Raft consensus that is perfect for fault-tolerant IoT and Edge devices.</p>
+      <p class="p-heading--4 u-sv3">Dqlite is a fast, embedded, persistent SQL database with Raft consensus that is perfect for fault-tolerant IoT and Edge devices.</p>
       <div>
         <a class="github-button" data-size="large" href="https://github.com/canonical/dqlite" aria-label="Follow @canonical on GitHub"></a>
         <a class="github-button" data-size="large" href="https://github.com/canonical/dqlite" data-icon="octicon-star" data-show-count="true" aria-label="Star canonical/dqlite on GitHub"></a>
@@ -23,10 +23,10 @@
   </div>
   <div class="row">
     <div class="col-8">
-      <p>Dqlite (distributed SQLite) extends SQLite across a cluster of machines, with automatic failover and high-availability to keep your application running. It uses <a href="https://github.com/canonical/raft" class="p-link--external" aria-label="External link to the C-Raft Github project page">C-Raft</a>, an optimised Raft implementation in C, to gain high-performance transactional consensus and fault tolerance while preserving SQlite’s  outstanding efficiency and tiny footprint.</p>
+      <p>Dqlite (distributed SQLite) extends SQLite across a cluster of machines, with automatic failover and high-availability to keep your application running. It uses <a href="https://github.com/canonical/raft" aria-label="External link to the C-Raft Github project page">C-Raft</a>, an optimised Raft implementation in C, to gain high-performance transactional consensus and fault tolerance while preserving SQlite’s  outstanding efficiency and tiny footprint.</p>
       <ul class="p-inline-list">
         <li class="p-inline-list__item"><a href="/docs" class="p-button--positive u-no-margin--bottom-small">Read the Dqlite docs</a></li>
-        <li class="p-inline-list__item"><a href="https://github.com/canonical/dqlite/releases" class="p-button--neutral u-no-margin--bottom-small p-link--external" aria-label="External link to the Dqlite releases page on Github">Download Dqlite</a></li>
+        <li class="p-inline-list__item"><a href="https://github.com/canonical/dqlite/releases" class="p-button u-no-margin--bottom-small" aria-label="External link to the Dqlite releases page on Github">Download Dqlite</a></li>
       </ul>
       <p>install on Ubuntu: <div class="p-code-snippet"><pre class="p-code-snippet__block--icon"><code>sudo add-apt-repository -y ppa:dqlite/stable && sudo apt install dqlite</code></pre></div></p>
     </div>
@@ -128,7 +128,7 @@
   <div class="row">
     <div class="col-7">
       <h2>Why Raft?</h2>
-      <p>Consensus algorithms provide certainty of transaction replication. It ensures data persistence in the event of the loss of one or more machines in the cluster, as long as a majority survives. Raft is widely considered the consensus algorithm of choice for efficiency and correctness of implementation. <a href="http://github.com/canonical/raft" aria-label="External link to the C-Raft Github project page" class="p-link--external">C-Raft</a> is a hand-tuned C implementation of Raft that is fully asynchronous by design.</p>
+      <p>Consensus algorithms provide certainty of transaction replication. It ensures data persistence in the event of the loss of one or more machines in the cluster, as long as a majority survives. Raft is widely considered the consensus algorithm of choice for efficiency and correctness of implementation. <a href="http://github.com/canonical/raft" aria-label="External link to the C-Raft Github project page">C-Raft</a> is a hand-tuned C implementation of Raft that is fully asynchronous by design.</p>
     </div>
   </div>
 </section>
