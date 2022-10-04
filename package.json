@@ -12,17 +12,15 @@
     "build-cookie-policy": "mkdir -p static/js/build/cookie-policy && cp node_modules/@canonical/cookie-policy/build/js/cookie-policy.js static/js/build/cookie-policy",
     "format-python": "black --line-length 79 webapp",
     "lint-python": "flake8 webapp tests && black --check --line-length 79 webapp tests",
-    "lint-js": "eslint static/js",
     "lint-scss": "stylelint static/**/*.scss",
     "serve": "./entrypoint 0.0.0.0:${PORT}",
     "start": "yarn run build && concurrently --raw 'yarn run watch' 'yarn run serve'",
     "test": "yarn run lint-scss && yarn run lint-python && yarn run test-python",
-    "test-python": "python3 -m unittest discover tests",
-    "test-js": "jest"
+    "test-python": "python3 -m unittest discover tests"
   },
   "dependencies": {
     "@canonical/cookie-policy": "3.4.0",
-    "@canonical/global-nav": "3.0.0",
+    "@canonical/global-nav": "3.1.4",
     "autoprefixer": "10.4.1",
     "babel-loader": "8.2.3",
     "expose-loader": "3.1.0",

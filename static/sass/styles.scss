@@ -5,7 +5,9 @@
 @import "@canonical/cookie-policy/build/css/cookie-policy";
 
 // Import Vanilla
-@import "vanilla-framework/scss/build";
+@import "vanilla-framework";
+
+@include vanilla;
 
 .skip-content {
   background-color: $color-x-light;
