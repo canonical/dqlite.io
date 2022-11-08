@@ -5,46 +5,12 @@
 @import "@canonical/cookie-policy/build/css/cookie-policy";
 
 // Import Vanilla
-@import "vanilla-framework/scss/build";
+@import "vanilla-framework";
 
-// Custom styles
-.p-navigation__banner {
-  background-color: $ubuntu-orange;
-  padding-left: 32px !important;
-  padding-right: 33px !important;
-}
+@include vanilla;
 
 .skip-content {
   background-color: $color-x-light;
-}
-
-.p-navigation {
-  .p-navigation__row {
-    padding: 0;
-
-    .p-navigation__banner {
-      padding: 0 ($sph--large + $sph--small);
-
-      .p-navigation__logo {
-        font-size: 19px;
-        font-weight: 700;
-        margin-right: 0;
-      }
-
-      .p-navigation__toggle {
-        &--open,
-        &--close {
-          font-weight: 400;
-        }
-      }
-    }
-
-    .p-navigation__link a {
-      height: 100%;
-      padding-left: ($sph--large + $sph--small);
-      padding-right: ($sph--large + $sph--small);
-    }
-  }
 }
 
 .u-no-margin--bottom-small {

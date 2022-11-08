@@ -1,31 +1,33 @@
-<header id="navigation" class="p-navigation">
+<header id="navigation" class="p-navigation is-dark">
   <div class="p-navigation__row">
     <div class="p-navigation__banner">
-      <div class="p-navigation__logo u-vertically-center">
-        <a class="p-navigation__item" href="/" style="color:white;" aria-label="Back to homepage">
-          Dqlite
+      <div class="p-navigation__tagged-logo">
+        <a class="p-navigation__link" href="/">
+          <div class="p-navigation__logo-tag">
+            <img class="p-navigation__logo-icon" src="https://assets.ubuntu.com/v1/82818827-CoF_white.svg" alt="">
+          </div>
+          <span class="p-navigation__logo-title">Canonical Dqlite</span>
         </a>
       </div>
       <a href="#navigation" class="p-navigation__toggle--open" title="menu">Menu</a>
-      <a href="#" class="p-navigation__toggle--close" title="close menu">Close menu</a>
+      <a href="#navigation-closed" class="p-navigation__toggle--close" title="close menu">Close menu</a>
     </div>
-    <nav class="p-navigation__nav">
-      <span class="u-off-screen">
-        <a href="#main-content" class="p-link--inverted">Jump to main content</a>
-      </span>
-      <ul class="p-navigation__items" role="menu">
-        <li class="p-navigation__item {% if request.path in ['/docs', '/docs/faq', '/docs/protocol'] %}is-selected{% endif %}" role="menuitem">
+    <nav class="p-navigation__nav" aria-label="navigation">
+      <ul class="p-navigation__items">
+        <li class="p-navigation__item {% if request.path in ['/docs', '/docs/faq', '/docs/protocol'] %}is-selected{% endif %}">
           <a href="/docs" class="p-navigation__link">Docs</a>
         </li>
-        <li class="p-navigation__item" role="menuitem">
+        <li class="p-navigation__item">
           <a href="https://discourse.dqlite.io" class="p-navigation__link">Discourse</a>
         </li>
-        <li class="p-navigation__item" role="menuitem">
+        <li class="p-navigation__item">
           <a href="https://github.com/canonical/dqlite" class="p-navigation__link">Code</a>
         </li>
-        <li class="p-navigation__item" role="menuitem">
+        <li class="p-navigation__item">
           <a href="https://github.com/canonical/dqlite/issues" class="p-navigation__link">Bugs</a>
         </li>
+      </ul>
+      <ul class="p-navigation__items global-nav">
       </ul>
     </nav>
   </div>
