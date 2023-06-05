@@ -1,0 +1,42 @@
+# Copyright 2023 Canonical Ltd.
+# See LICENSE file for licensing details.
+name: dqlite-io
+summary: OCI image for the dqlite.io site.
+description: OCI image for the dqlite.io site.
+version: "0.1"
+base: bare
+build-base: ubuntu:22.04
+license: Apache-2.0
+platforms:
+  amd64:
+
+parts:
+  flask-dependencies:
+    plugin: python
+    source: .
+    stage-packages:
+      - python3-venv
+    python-packages:
+      - gunicorn
+    python-requirements:
+      - requirements.txt
+  flask-app:
+    plugin: dump
+    source: .
+    organize:
+      "*": srv/flask/app/
+    prime:
+      - srv/flask/app
+  static-files:
+    source: .
+    plugin: nil
+    build-snaps:
+      - node/18/stable
+    override-build: |
+      craftctl default
+      yarn install
+      yarn run build-css
+      yarn run build-js
+      mkdir -p $CRAFT_PART_INSTALL/srv/flask/app/static
+      cp -r static/css $CRAFT_PART_INSTALL/srv/flask/app/static
+      cp -r static/js $CRAFT_PART_INSTALL/srv/flask/app/static
