@@ -8,4 +8,4 @@ base: bare
 license: Apache-2.0
 
 extensions:
-  - flask-extension
+  - paas-flask
