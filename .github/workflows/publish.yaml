@@ -1,0 +1,73 @@
+name: Build and Publish
+
+on:
+  push:
+
+jobs:
+  container:
+    name: Build and Publish Rock Image
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+
+      - name: Build Assets
+        run: |
+          yarn install
+          yarn run build-css
+          yarn run build-js
+
+      - name: Setup LXD
+        uses: canonical/setup-lxd@main
+
+      - name: Checkout Rockcraft
+        uses: actions/checkout@v2
+        with:
+          repository: weiiwang01/rockcraft
+          path: rockcraft
+
+      - name: Rockcraft Git Hash
+        id: rockcraft-git
+        working-directory: ./rockcraft
+        run: echo "SHA=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+      - name: Restore Rockcraft Snap Cache
+        id: cache-rockcraft-snap
+        uses: actions/cache/restore@v3
+        with:
+          path: ./rockcraft/rockcraft*.snap
+          key: rockcraft-${{ steps.rockcraft-git.outputs.SHA }}.snap
+
+      - name: Build Rockcraft
+        if: steps.cache-rockcraft-snap.outputs.cache-hit != 'true'
+        working-directory: ./rockcraft
+        run: |
+          sudo snap install snapcraft --classic
+          snapcraft --use-lxd
+
+      - name: Cache Rockcraft Snap Cache
+        uses: actions/cache/save@v3
+        with:
+          path: ./rockcraft/rockcraft*.snap
+          key: ${{ steps.cache-rockcraft-snap.outputs.cache-primary-key }}
+
+      - name: Install Rockcraft
+        working-directory: ./rockcraft
+        run: |
+          sudo snap install rockcraft*.snap --classic --dangerous
+
+      - name: Build Rock Image
+        run: |
+          export ROCKCRAFT_ENABLE_EXPERIMENTAL_EXTENSIONS=true
+          rockcraft pack
+
+      - name: Publish Rock Image
+        run: >-
+          skopeo --insecure-policy copy
+          oci-archive:$(ls *.rock)
+          docker://weiiwang01/dqlite.io:$(git rev-parse --short HEAD)
+          --dest-creds "weiiwang01:${{ secrets.DOCKERHUB_TOKEN }}"

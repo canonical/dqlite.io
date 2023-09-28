@@ -7,5 +7,13 @@ version: "0.1"
 base: bare
 license: Apache-2.0
 
+parts:
+  flask/install-app:
+    prime:
+      - flask/app/static
+      - flask/app/app.py
+      - flask/app/webapp
+      - flask/app/templates
+
 extensions:
-  - flask
+  - flask-framework
