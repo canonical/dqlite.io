@@ -2,6 +2,8 @@ name: Build and Publish
 
 on:
   push:
+    branches:
+      - main
 
 jobs:
   container:
@@ -27,8 +29,9 @@ jobs:
       - name: Checkout Rockcraft
         uses: actions/checkout@v2
         with:
-          repository: weiiwang01/rockcraft
+          repository: canonical/rockcraft
           path: rockcraft
+          ref: feature/12f
 
       - name: Rockcraft Git Hash
         id: rockcraft-git

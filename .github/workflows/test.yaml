@@ -1,0 +1,204 @@
+name: Test 12-factor Workflow
+
+on:
+  push:
+
+jobs:
+  test:
+    name: Test 12-factor Workflow
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Setup LXD
+        uses: canonical/setup-lxd@main
+
+      - name: Checkout Rockcraft
+        uses: actions/checkout@v2
+        with:
+          repository: canonical/rockcraft
+          path: rockcraft
+          ref: feature/12f
+          fetch-depth: 0
+
+      - name: Rockcraft Git Hash
+        id: rockcraft-git
+        working-directory: ./rockcraft
+        run: echo "SHA=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+      - name: Restore Rockcraft Snap Cache
+        id: cache-rockcraft-snap
+        uses: actions/cache/restore@v3
+        with:
+          path: ./rockcraft/rockcraft*.snap
+          key: rockcraft-${{ steps.rockcraft-git.outputs.SHA }}.snap
+
+      - name: Build Rockcraft
+        if: steps.cache-rockcraft-snap.outputs.cache-hit != 'true'
+        working-directory: ./rockcraft
+        run: |
+          sudo snap install snapcraft --classic
+          snapcraft --use-lxd
+
+      - name: Cache Rockcraft Snap Cache
+        uses: actions/cache/save@v3
+        with:
+          path: ./rockcraft/rockcraft*.snap
+          key: ${{ steps.cache-rockcraft-snap.outputs.cache-primary-key }}
+
+      - name: Install Rockcraft
+        working-directory: ./rockcraft
+        run: |
+          sudo snap install rockcraft*.snap --classic --dangerous
+
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Rockcraft Init
+        run: rockcraft init --profile flask-framework --name dqlite
+
+      - name: Update rockcraft.yaml
+        run: |
+          cat << EOF >> rockcraft.yaml
+          parts:
+            flask/install-app:
+              prime:
+                - flask/app/static
+                - flask/app/app.py
+                - flask/app/webapp
+                - flask/app/templates
+          EOF
+
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+
+      - name: Build Assets
+        run: |
+          yarn install
+          yarn run build-css
+          yarn run build-js
+
+      - name: Build Rock Image
+        run: |
+          export ROCKCRAFT_ENABLE_EXPERIMENTAL_EXTENSIONS=true
+          rockcraft pack
+
+      - name: Checkout Charmcraft
+        uses: actions/checkout@v2
+        with:
+          repository: weiiwang01/charmcraft
+          path: charmcraft
+          ref: feat-flask-init
+          fetch-depth: 0
+
+      - name: Charmcraft Git Hash
+        id: charmcraft-git
+        working-directory: ./charmcraft
+        run: echo "SHA=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+      - name: Restore Charmcraft Snap Cache
+        id: cache-charmcraft-snap
+        uses: actions/cache/restore@v3
+        with:
+          path: ./charmcraft/charmcraft*.snap
+          key: charmcraft-${{ steps.charmcraft-git.outputs.SHA }}.snap
+
+      - name: Build Charmcraft
+        if: steps.cache-charmcraft-snap.outputs.cache-hit != 'true'
+        working-directory: ./charmcraft
+        run: |
+          sudo snap install snapcraft --classic
+          snapcraft --use-lxd
+
+      - name: Cache Charmcraft Snap Cache
+        uses: actions/cache/save@v3
+        with:
+          path: ./charmcraft/charmcraft*.snap
+          key: ${{ steps.cache-charmcraft-snap.outputs.cache-primary-key }}
+
+      - name: Install Charmcraft
+        working-directory: ./charmcraft
+        run: |
+          sudo snap install charmcraft*.snap --classic --dangerous
+
+      - name: Setup operator environment
+        uses: charmed-kubernetes/actions-operator@main
+        with:
+          provider: microk8s
+          microk8s-addons: dns ingress rbac storage registry
+
+      - name: Push Rock Image
+        run: |
+          skopeo --insecure-policy copy oci-archive:$(ls *.rock) docker-daemon:localhost:32000/dqlite:latest
+          docker push localhost:32000/dqlite:latest
+
+      - name: Charmcraft Init
+        run: |
+          mkdir charm
+          cd charm
+          charmcraft init --profile flask-framework --name dqlite --author dqlite
+
+      - name: Charmcraft Pack
+        working-directory: ./charm
+        run: |
+          export CHARMCRAFT_ENABLE_EXPERIMENTAL_EXTENSIONS=true
+          charmcraft pack
+
+      - name: Upload Charm
+        uses: actions/upload-artifact@v3
+        with:
+          name: charm
+          path: ./charm/*.charm
+
+      - name: Deploy Charm
+        working-directory: ./charm
+        run: |
+          juju deploy ./*.charm dqlite \
+            --resource flask-app-image=localhost:32000/dqlite:latest \
+            --resource statsd-prometheus-exporter-image=prom/statsd-exporter:v0.24.0
+
+      - name: Wait For Charm Ready
+        timeout-minutes: 30
+        run: |
+          status=unknown
+          while [ "$status" != "active" ]
+          do
+            status=$(juju status --format json | jq -r '.applications["dqlite"]["application-status"].current')
+            echo "current status: $status"
+            sleep 5
+          done
+
+      - name: Juju Status
+        run: juju status
+
+      - name: Get Charm Address
+        id: charm-address
+        run: |
+          address=$(juju status --format json | jq -r '.applications["dqlite"]["units"]["dqlite/0"].address')
+          echo "ADDRESS=$address" >> "$GITHUB_OUTPUT"
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install Playwright
+        run: |
+          pip install pytest-playwright
+          playwright install
+
+      - name: Take Screenshot
+        shell: python
+        run: |
+          from playwright.sync_api import sync_playwright
+
+          with sync_playwright() as p:
+              browser = p.chromium.launch()
+              page = browser.new_page()
+              page.goto("http://${{ steps.charm-address.outputs.ADDRESS }}:8000")
+              page.screenshot(path="screenshot.png", full_page=True)
+
+      - name: Upload Screenshot
+        uses: actions/upload-artifact@v3
+        with:
+          name: screenshot
+          path: screenshot.png
