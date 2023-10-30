@@ -1,6 +1,6 @@
 domain: dqlite.io
 
-image: prod-comms.docker-registry.canonical.com/dqlite.io
+image: prod-comms.ps5.docker-registry.canonical.com/dqlite.io
 
 env:
   - name: SENTRY_DSN
