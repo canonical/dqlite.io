@@ -137,6 +137,18 @@ jobs:
           cd charm
           charmcraft init --profile flask-framework --name dqlite --author dqlite
 
+      - name: Update charmcraft.yaml
+        working-directory: ./charm
+        run: |
+          cat << EOF >> charmcraft.yaml
+          config:
+            options:
+              foobar:
+                type: string
+                default: foobar
+                description: Test foobar
+          EOF
+
       - name: Charmcraft Pack
         working-directory: ./charm
         run: |
