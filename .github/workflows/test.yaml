@@ -8,6 +8,9 @@ jobs:
     name: Test 12-factor Workflow
     runs-on: ubuntu-latest
 
+    env:
+      PROJECT_NAME: dqlite-io
+
     steps:
       - name: Setup LXD
         uses: canonical/setup-lxd@main
@@ -54,7 +57,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Rockcraft Init
-        run: rockcraft init --profile flask-framework --name dqlite
+        run: rockcraft init --profile flask-framework --name $PROJECT_NAME
 
       - name: Update rockcraft.yaml
         run: |
@@ -81,6 +84,12 @@ jobs:
         run: |
           export ROCKCRAFT_ENABLE_EXPERIMENTAL_EXTENSIONS=true
           rockcraft pack
+
+      - name: Upload Rock
+        uses: actions/upload-artifact@v3
+        with:
+          name: rock
+          path: ./*.rock
 
       - name: Checkout Charmcraft
         uses: actions/checkout@v2
@@ -128,14 +137,14 @@ jobs:
 
       - name: Push Rock Image
         run: |
-          skopeo --insecure-policy copy oci-archive:$(ls *.rock) docker-daemon:localhost:32000/dqlite:latest
-          docker push localhost:32000/dqlite:latest
+          skopeo --insecure-policy copy oci-archive:$(ls *.rock) docker-daemon:localhost:32000/$PROJECT_NAME:latest
+          docker push localhost:32000/$PROJECT_NAME:latest
 
       - name: Charmcraft Init
         run: |
           mkdir charm
           cd charm
-          charmcraft init --profile flask-framework --name dqlite --author dqlite
+          charmcraft init --profile flask-framework --name $PROJECT_NAME --author $PROJECT_NAME
 
       - name: Update charmcraft.yaml
         working-directory: ./charm
@@ -164,8 +173,8 @@ jobs:
       - name: Deploy Charm
         working-directory: ./charm
         run: |
-          juju deploy ./*.charm dqlite \
-            --resource flask-app-image=localhost:32000/dqlite:latest \
+          juju deploy ./*.charm $PROJECT_NAME \
+            --resource flask-app-image=localhost:32000/$PROJECT_NAME:latest \
             --resource statsd-prometheus-exporter-image=prom/statsd-exporter:v0.24.0
 
       - name: Wait For Charm Ready
@@ -174,7 +183,7 @@ jobs:
           status=unknown
           while [ "$status" != "active" ]
           do
-            status=$(juju status --format json | jq -r '.applications["dqlite"]["application-status"].current')
+            status=$(juju status --format json | jq -r ".applications[\"$PROJECT_NAME\"][\"application-status\"].current")
             echo "current status: $status"
             sleep 5
           done
@@ -185,7 +194,7 @@ jobs:
       - name: Get Charm Address
         id: charm-address
         run: |
-          address=$(juju status --format json | jq -r '.applications["dqlite"]["units"]["dqlite/0"].address')
+          address=$(juju status --format json | jq -r ".applications[\"$PROJECT_NAME\"][\"units\"][\"$PROJECT_NAME/0\"].address")
           echo "ADDRESS=$address" >> "$GITHUB_OUTPUT"
 
       - name: Setup Python
