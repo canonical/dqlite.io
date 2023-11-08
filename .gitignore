@@ -46,6 +46,8 @@ package-lock.json
 *.snap
 _site/
 *.*.map
+*.rock
+/charm/
 
 # [env] Local environment settings
 .docker-project
