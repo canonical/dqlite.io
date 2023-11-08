@@ -1,3 +1,4 @@
+import os
 import talisker.requests
 
 # Packages
@@ -10,7 +11,9 @@ from canonicalwebteam.discourse import (
 from canonicalwebteam.search import build_search_view
 from flask import render_template, make_response
 
-# Rename your project below
+# TODO: make this a configuration parameter on flask-base
+os.environ["SECRET_KEY"] = os.environ["FLASK_SECRET_KEY"]
+
 app = FlaskBase(
     __name__,
     "dqlite.io",
