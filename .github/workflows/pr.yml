@@ -2,7 +2,7 @@ name: PR checks
 on: pull_request
 
 env:
-  FLAKS_SECRET_KEY: insecure_test_key
+  FLASK_SECRET_KEY: insecure_test_key
   SECRET_KEY: insecure_test_key
 
 jobs:
