@@ -1,18 +1,21 @@
-# Copyright 2023 Canonical Ltd.
-# See LICENSE file for licensing details.
 name: dqlite-io
-summary: OCI image for the dqlite.io site.
-description: OCI image for the dqlite.io site.
+base: ubuntu:22.04
 version: "0.1"
-base: bare
-license: Apache-2.0
+summary: A summary of your Flask application
+description: |
+  This is the rockcraft for the dqlite.io website.
+license: GPL-3.0
+platforms:
+  amd64:
+
+extensions:
+  - flask-framework
 
 parts:
   flask/install-app:
     prime:
-      - flask/app/static
+      - flask/app/.env
+      - flask/app/app.py
       - flask/app/webapp
       - flask/app/templates
-
-extensions:
-  - flask-framework
+      - flask/app/static
