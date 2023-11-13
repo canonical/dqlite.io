@@ -13,8 +13,8 @@ env:
 
   - name: FLASK_SECRET_KEY
     secretKeyRef:
-      key: secret-keys
-      name: dqlite-io
+      key: dqlite-io
+      name: secret-keys
 
 # Overrides for production
 production:
