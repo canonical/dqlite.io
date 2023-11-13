@@ -11,6 +11,11 @@ env:
       key: google-custom-search-key
       name: google-api
 
+  - name: FLASK_SECRET_KEY
+    secretKeyRef:
+      key: secret-keys
+      name: dqlite-io
+
 # Overrides for production
 production:
   replicas: 5
