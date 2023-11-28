@@ -1,5 +1,5 @@
 import os
-import talisker.requests
+import requests
 
 # Packages
 from canonicalwebteam.flask_base.app import FlaskBase
@@ -22,7 +22,7 @@ app = FlaskBase(
     template_404="404.html",
     template_500="500.html",
 )
-session = talisker.requests.get_session()
+session = requests.Session()
 
 docs_url_prefix = "/docs"
 discourse_docs = Docs(

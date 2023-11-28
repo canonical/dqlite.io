@@ -1,3 +1,4 @@
-canonicalwebteam.flask-base==1.1.0
+# canonicalwebteam.flask-base==1.1.0
+-e /home/ubuntu/dqlite-io/canonicalwebteam.flask-base
 canonicalwebteam.discourse==5.4.7
 canonicalwebteam.search==1.3.0
