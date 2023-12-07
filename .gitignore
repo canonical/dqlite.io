@@ -47,7 +47,6 @@ package-lock.json
 _site/
 *.*.map
 *.rock
-/charm/
 
 # [env] Local environment settings
 .docker-project
