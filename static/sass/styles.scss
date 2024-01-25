@@ -17,3 +17,11 @@
     margin-bottom: 0 !important;
   }
 }
+
+// TODO: to be removed when fixed in Vanilla
+// https://github.com/canonical/vanilla-framework/issues/4947
+body:not(.docs) {
+  .p-navigation__banner {
+    padding-left: 0;
+  }
+}
