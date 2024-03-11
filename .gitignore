@@ -71,3 +71,6 @@ bower_components/
 
 build/
 dist/
+
+# Local development
+canonicalwebteam.flask-base/
