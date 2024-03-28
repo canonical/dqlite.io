@@ -1,5 +1,7 @@
 name: dqlite-io
 
+type: charm
+
 bases:
   - build-on:
     - name: ubuntu
@@ -14,3 +16,12 @@ description: This is the charm for the dqlite.io website.
 
 extensions:
   - flask-framework
+
+# Uncomment the integrations used by your application
+# requires:
+#   mysql:
+#     interface: mysql_client
+#     limit: 1
+#   postgresql:
+#     interface: postgresql_client
+#     limit: 1

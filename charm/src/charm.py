@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Copyright 2023 Canonical Ltd.
+# Copyright 2024 Canonical Ltd.
 # See LICENSE file for licensing details.
 
 """Flask Charm entrypoint."""
@@ -8,12 +8,12 @@ import logging
 import typing
 
 import ops
-import xiilib.flask
+import paas_app_charmer.flask
 
 logger = logging.getLogger(__name__)
 
 
-class FlaskCharm(xiilib.flask.Charm):
+class FlaskCharm(paas_app_charmer.flask.Charm):
     """Flask Charm service."""
 
     def __init__(self, *args: typing.Any) -> None:
@@ -25,5 +25,5 @@ class FlaskCharm(xiilib.flask.Charm):
         super().__init__(*args)
 
 
-if __name__ == "__main__":  # pragma: nocover
+if __name__ == "__main__":
     ops.main.main(FlaskCharm)
