@@ -1,8 +1,8 @@
 name: Deploy site
 
-on: 
+on:
   push:
-    branches: 
+    branches:
       - main
 
 env:
@@ -11,7 +11,7 @@ env:
 
 jobs:
   pack-charm:
-    runs-on: ubuntu-latest      
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -20,7 +20,7 @@ jobs:
         uses: canonical/setup-lxd@main
 
       - name: Setup Charmcraft
-        run: sudo snap install charmcraft --classic --channel=edge/12f
+        run: sudo snap install charmcraft --classic --channel=latest/edge
 
       - name: Pack charm
         run: charmcraft pack -v --project-dir ./charm
@@ -50,7 +50,7 @@ jobs:
         uses: canonical/setup-lxd@main
 
       - name: Setup Rockcraft
-        run: sudo snap install rockcraft --classic --channel=edge/12f
+        run: sudo snap install rockcraft --classic --channel=latest/edge
 
       - name: Pack Rock
         run: rockcraft pack
@@ -71,7 +71,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: dqlite-io-rock
-      
+
       - name: Set image URL
         id: set_image_url
         run: echo "image_url=ghcr.io/canonical/dqlite.io:$(date +%s)-${GITHUB_SHA:0:7}" >> $GITHUB_OUTPUT
