@@ -17,6 +17,13 @@ description: This is the charm for the dqlite.io website.
 extensions:
   - flask-framework
 
+config:
+  options:
+    google-search-api-key:
+      description: Google search API key
+      type: string
+      required: true
+
 # Uncomment the integrations used by your application
 # requires:
 #   mysql:

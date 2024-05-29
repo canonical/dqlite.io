@@ -13,6 +13,7 @@ from flask import render_template, make_response
 
 # TODO: make this a configuration parameter on flask-base
 os.environ["SECRET_KEY"] = os.environ["FLASK_SECRET_KEY"]
+os.environ["SEARCH_API_KEY"] = os.environ["FLASK_GOOGLE_SEARCH_API_KEY"]
 
 app = FlaskBase(
     __name__,

@@ -4,7 +4,7 @@ on: pull_request
 env:
   FLASK_SECRET_KEY: insecure_test_key
   SECRET_KEY: insecure_test_key
-
+  FLASK_GOOGLE_SEARCH_API_KEY: insecure_test_key
 jobs:
   run-dotrun:
     runs-on: ubuntu-latest
