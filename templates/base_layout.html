@@ -1,89 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta https-equiv="Accept-CH" content="DPR, Viewport-Width, Width">
-
-  <title>
-    {% block title %}Canonical Dqlite{% endblock %}
-  </title>
-
-  <link rel="preconnect" href="https://www.google-analytics.com">
-  <link rel="preconnect" href="https://www.gstatic.com">
-
-  <!-- Google Tag Manager -->
-  <script>(function (w, d, s, l, i) {
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta https-equiv="Accept-CH" content="DPR, Viewport-Width, Width" />
+    <title>
+      {% block title %}Canonical Dqlite{% endblock %}
+    </title>
+    <link rel="preconnect" href="https://www.google-analytics.com" />
+    <link rel="preconnect" href="https://www.gstatic.com" />
+    <!-- Google Tag Manager -->
+    <script>(function (w, d, s, l, i) {
       w[l] = w[l] || []; w[l].push({
         'gtm.start':
           new Date().getTime(), event: 'gtm.js'
       }); var f = d.getElementsByTagName(s)[0],
         j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
           'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
-    })(window, document, 'script', 'dataLayer', 'GTM-MV7Z9M3');</script>
-  <!-- End Google Tag Manager -->
-
-  <!-- GitHub buttons -->
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
-
-
-  <link rel="icon" type="image/png" href="https://assets.ubuntu.com/v1/16c27f81-COF%20favicon-16x16.png" sizes="16x16" />
-  <link rel="icon" type="image/png" href="https://assets.ubuntu.com/v1/be7e4cc6-COF-favicon-32x32.png" sizes="32x32" />
-
-  <link rel="preload" as="font" type="font/woff2" href="https://assets.ubuntu.com/v1/e8c07df6-Ubuntu-L_W.woff2" crossorigin>
-  <link rel="preload" as="font" type="font/woff2" href="https://assets.ubuntu.com/v1/7f100985-Ubuntu-Th_W.woff2" crossorigin>
-  <link rel="preload" as="font" type="font/woff2" href="https://assets.ubuntu.com/v1/f8097dea-Ubuntu-LI_W.woff2" crossorigin>
-  <link rel="preload" as="font" type="font/woff2" href="https://assets.ubuntu.com/v1/fff37993-Ubuntu-R_W.woff2" crossorigin>
-
-  <meta name="description" content="{% block meta_description %}Dqlite is a fast, embedded, persistent SQL database with Raft consensus that is perfect for fault-tolerant IoT and Edge devices.{% endblock %}">
-
-  <meta name="theme-color" content="#E95420">
-  <meta name="twitter:account_id" content="4503599627481511">
-  <meta name="twitter:site" content="@ubuntu">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="http://dqlite.io">
-  <meta property="og:site_name" content="dqlite.io">
-
-  {% if self.title() %}
-  <meta name="twitter:title" content="{{ self.title() }} | Canonical Dqlite">
-  <meta property="og:title" content="{{ self.title() }} | Canonical Dqlite">
-  {% endif %}
-
-  {% if self.meta_description() %}
-  <meta name="twitter:description" content="{{ self.meta_description() }}">
-  <meta property="og:description" content="{{ self.meta_description() }}">
-  {% endif %}
-
-  <link rel="stylesheet" type="text/css" media="screen" href="{{ versioned_static('css/styles.css') }}" />
-</head>
-
-<body class="{% block page_class %}{% endblock %}">
-  <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MV7Z9M3" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-  <!-- End Google Tag Manager (noscript) -->
-
-  {% block body%}
-  {% include "partial/_navigation.html" %}
-
-  <div id="main-content">
-    {% block content %}{% endblock content %}
-  </div>
-
-  {% include "partial/_footer.html" %}
-  {% endblock body %}
-  <script src="{{ versioned_static('js/build/global-nav/global-nav.js') }}"></script>
-  <script src="{{ versioned_static('js/build/cookie-policy/cookie-policy.js') }}"></script>
-  <script>
+    })(window, document, 'script', 'dataLayer', 'GTM-MV7Z9M3');
+    </script>
+    <!-- End Google Tag Manager -->
+    <!-- GitHub buttons -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <link rel="apple-touch-icon"
+          sizes="180x180"
+          href="https://assets.ubuntu.com/v1/f38b9c7e-COF%20apple-touch-icon.png" />
+    <link rel="icon"
+          type="image/png"
+          sizes="32x32"
+          href="https://assets.ubuntu.com/v1/be7e4cc6-COF-favicon-32x32.png" />
+    <link rel="icon"
+          type="image/png"
+          sizes="16x16"
+          href="https://assets.ubuntu.com/v1/16c27f81-COF%20favicon-16x16.png" />
+    <link rel="manifest" href="{{ versioned_static("files/site.webmanifest") }}" />
+    <!-- Serving favicon for search engines locally -->
+    <link rel="icon" type="image/png" sizes="48x48" href="{{ versioned_static("favicons/COF-favicon-48x48.png") }}" />
+    <link rel="preload"
+          as="font"
+          type="font/woff2"
+          href="https://assets.ubuntu.com/v1/e8c07df6-Ubuntu-L_W.woff2"
+          crossorigin />
+    <link rel="preload"
+          as="font"
+          type="font/woff2"
+          href="https://assets.ubuntu.com/v1/7f100985-Ubuntu-Th_W.woff2"
+          crossorigin />
+    <link rel="preload"
+          as="font"
+          type="font/woff2"
+          href="https://assets.ubuntu.com/v1/f8097dea-Ubuntu-LI_W.woff2"
+          crossorigin />
+    <link rel="preload"
+          as="font"
+          type="font/woff2"
+          href="https://assets.ubuntu.com/v1/fff37993-Ubuntu-R_W.woff2"
+          crossorigin />
+    <meta name="description"
+          content="{% block meta_description %}Dqlite is a fast, embedded, persistent SQL database with Raft consensus that is perfect for fault-tolerant IoT and Edge devices.{% endblock %}" />
+    <meta name="theme-color" content="#E95420" />
+    <meta name="twitter:account_id" content="4503599627481511" />
+    <meta name="twitter:site" content="@ubuntu" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="http://dqlite.io" />
+    <meta property="og:site_name" content="dqlite.io" />
+    {% if self.title() %}
+      <meta name="twitter:title" content="{{ self.title() }} | Canonical Dqlite" />
+      <meta property="og:title" content="{{ self.title() }} | Canonical Dqlite" />
+    {% endif %}
+    {% if self.meta_description() %}
+      <meta name="twitter:description" content="{{ self.meta_description() }}" />
+      <meta property="og:description" content="{{ self.meta_description() }}" />
+    {% endif %}
+    <link rel="stylesheet"
+          type="text/css"
+          media="screen"
+          href="{{ versioned_static("css/styles.css") }}" />
+  </head>
+  <body class="{% block page_class %}{% endblock %}">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MV7Z9M3"
+        height="0"
+        width="0"
+        style="display:none;
+               visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    {% block body %}
+      {% include "partial/_navigation.html" %}
+      <div id="main-content">
+        {% block content %}
+        {% endblock content %}
+      </div>
+      {% include "partial/_footer.html" %}
+    {% endblock body %}
+    <script src="{{ versioned_static('js/build/global-nav/global-nav.js') }}"></script>
+    <script src="{{ versioned_static('js/build/cookie-policy/cookie-policy.js') }}"></script>
+    <script>
     if (typeof cpNs !== "undefined") {
         cpNs.cookiePolicy();
       }
     if (typeof canonicalGlobalNav !== "undefined") {
       canonicalGlobalNav.createNav({breakpoint: 940});
     }
-  </script>
-
-  {% block page_scripts %}{% endblock page_scripts %}
-</body>
-
+    </script>
+    {% block page_scripts %}
+    {% endblock page_scripts %}
+  </body>
 </html>
