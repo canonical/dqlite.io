@@ -23,6 +23,7 @@ config:
       description: Google search API key
       type: string
       required: true
+      default: ""
 
 # Uncomment the integrations used by your application
 # requires:
