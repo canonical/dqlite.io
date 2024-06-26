@@ -6,7 +6,7 @@ env:
   - name: SENTRY_DSN
     value: https://426397ba83be483a8a8d1ed92b0f0623@sentry.is.canonical.com//17
     
-  - name: SEARCH_API_KEY
+  - name: FLASK_GOOGLE_SEARCH_API_KEY
     secretKeyRef:
       key: google-custom-search-key
       name: google-api
@@ -15,7 +15,7 @@ env:
     secretKeyRef:
       key: dqlite-io
       name: secret-keys
-
+      
 # Overrides for production
 production:
   replicas: 5
