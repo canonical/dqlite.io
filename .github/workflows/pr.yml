@@ -6,16 +6,20 @@ env:
   SECRET_KEY: insecure_test_key
   FLASK_GOOGLE_SEARCH_API_KEY: insecure_test_key
 jobs:
+
   run-dotrun:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
+
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Install dotrun
-        uses: canonical/install-dotrun@main
+        run: sudo pip3 install dotrun requests==2.31.0
 
       - name: Install dependencies
-        run: dotrun install
+        run: |
+          sudo chmod -R 777 .
+          dotrun install
 
       - name: Build assets
         run: dotrun build
