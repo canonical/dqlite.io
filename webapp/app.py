@@ -47,7 +47,7 @@ app.add_url_rule(
         session=session,
         site="https://dqlite.io/docs",
         template_path="docs/search.html",
-        request_limit="1/day"
+        request_limit="1/day",
     ),
 )
 
