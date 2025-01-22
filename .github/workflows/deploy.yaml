@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - WD-18342/deploy-action # TODO: Remove before merging
 
 env:
   CHARMCRAFT_ENABLE_EXPERIMENTAL_EXTENSIONS: true
