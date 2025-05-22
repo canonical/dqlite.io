@@ -1,0 +1,3 @@
+/: "https://canonical.com/dqlite"
+/docs/?: "https://canonical.com/dqlite/docs"
+/docs/(?P<page>.*)/?: "https://canonical.com/dqlite/docs/{page}"
