@@ -6,7 +6,6 @@ env:
   SECRET_KEY: insecure_test_key
   FLASK_GOOGLE_SEARCH_API_KEY: insecure_test_key
 jobs:
-
   run-dotrun:
     runs-on: ubuntu-22.04
 
@@ -57,7 +56,7 @@ jobs:
         run: yarn lint-scss
 
   test-python:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
 
     steps:
       - uses: actions/checkout@v3
